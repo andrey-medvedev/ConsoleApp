@@ -1,4 +1,4 @@
-public class Automobile extends CustomClass implements Comparable<Automobile> {
+public class Automobile extends CustomClass implements Comparable<Automobile>, Cloneable {
     private int power;
     private String model;
     private int yearOfProduction;
@@ -10,7 +10,7 @@ public class Automobile extends CustomClass implements Comparable<Automobile> {
     }
 
     public int getPower() {
-        return power;
+        return this.power;
     }
     public String getModel(){
         return this.model;
@@ -31,6 +31,27 @@ public class Automobile extends CustomClass implements Comparable<Automobile> {
 
     @Override
     public int compareTo(Automobile o){
+
+        int compareResult = this.model.compareTo(o.getModel());
+        if (compareResult != 0){
+            return compareResult;
+        }
+
+        compareResult = Integer.compare(this.yearOfProduction, o.getYearOfProduction());
+        if (compareResult != 0){
+            return compareResult;
+        }
+
         return Integer.compare(this.power, o.getPower());
+    }
+
+    @Override
+    public String toString(){
+        return String.format("This Automobile model = '%s', power = %d, year of production = %d", this.model, this.power, this.yearOfProduction);
+    }
+
+    @Override
+    public Automobile clone() throws CloneNotSupportedException {
+        return (Automobile) super.clone();
     }
 }

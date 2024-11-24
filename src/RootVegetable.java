@@ -1,26 +1,26 @@
 public class RootVegetable extends CustomClass implements Comparable<RootVegetable>{
-    private String Color;
+    private String color;
     private String type;
     private int weight;
 
     public RootVegetable(String color, String type, int weight){
-        this.Color = color;
+        this.color = color;
         this.type = type;
         this.weight = weight;
     }
 
     public int getWeight() {
-        return weight;
+        return this.weight;
     }
     public String getColor() {
-        return Color;
+        return this.color;
     }
     public String getType() {
-        return type;
+        return this.type;
     }
 
     public void setColor(String color) {
-        Color = color;
+        this.color = color;
     }
     public void setType(String type) {
         this.type = type;
@@ -31,6 +31,26 @@ public class RootVegetable extends CustomClass implements Comparable<RootVegetab
 
     @Override
     public int compareTo(RootVegetable o){
+        int compareResult = this.type.compareTo(o.getType());
+        if (compareResult != 0){
+            return compareResult;
+        }
+
+        compareResult = this.color.compareTo(o.getColor());
+        if (compareResult != 0){
+            return compareResult;
+        }
+
         return Integer.compare(this.weight, o.getWeight());
+    }
+
+    @Override
+    public RootVegetable clone() throws CloneNotSupportedException {
+        return (RootVegetable) super.clone();
+    }
+
+    @Override
+    public String toString(){
+        return String.format("This RootVegetable color = '%s', type = '%s', weight = %d", this.color, this.type, this.weight);
     }
 }
