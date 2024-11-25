@@ -122,19 +122,20 @@ public class InputUserGenerator {
         int weight = -1;
 
         // Ввод данных для корнеплода с проверкой
-        while (name.isEmpty()) {
-            System.out.println("Введите название корнеплода: ");
-            name = scanner.nextLine();
-            if (name.isEmpty()) {
-                System.out.println("Название не может быть пустым.");
-            }
-        }
+
 
         while (color.isEmpty()) {
             System.out.println("Введите цвет корнеплода: ");
             color = scanner.nextLine();
             if (color.isEmpty()) {
                 System.out.println("Цвет не может быть пустым.");
+            }
+        }
+        while (name.isEmpty()) {
+            System.out.println("Введите название корнеплода: ");
+            name = scanner.nextLine();
+            if (name.isEmpty()) {
+                System.out.println("Название не может быть пустым.");
             }
         }
 
@@ -151,6 +152,6 @@ public class InputUserGenerator {
             }
         }
 
-        return new RootVegetable(name, color, weight);
+        return new RootVegetable(color, name, weight);
     }
 }
