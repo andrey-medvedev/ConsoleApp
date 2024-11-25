@@ -1,7 +1,5 @@
-import java.io.File;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class View {
     public static void main(String[] args) {
@@ -9,7 +7,7 @@ public class View {
         int userChoice;
         Scanner in = new Scanner(System.in);
 
-        while(true){
+        while (true) {
             System.out.printf("""
                     * Для выбора пользовательского класса введите 1 (текущее значение: %s)
                     * Для задания количества создаваемых объектов введите 2 (текущее значение: %d)
@@ -25,17 +23,17 @@ public class View {
             userChoice = 0;
             userChoice = in.nextInt();
 
-            if (userChoice == 9){
+            if (userChoice == 9) {
                 break;
             }
 
-            switch (userChoice){
+            switch (userChoice) {
                 case 1:
                     System.out.println("Введите новое значение для типа объекта (1 - автомобиль, 2 - книга, 3 - корнеплод)");
                     int internalChoice = in.nextInt();
-                    if (internalChoice == 1){
+                    if (internalChoice == 1) {
                         Controller.setCustomClassType(CustomClassType.AUTOMOBILE);
-                    } else if (internalChoice == 2){
+                    } else if (internalChoice == 2) {
                         Controller.setCustomClassType(CustomClassType.BOOK);
                     } else {
                         Controller.setCustomClassType(CustomClassType.ROOT_VEGETABLE);
@@ -47,9 +45,33 @@ public class View {
                     Controller.setNumberOfObjects(internalChoice);
                     break;
                 case 3:
-                    //должен считывать объекты с консоли, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+
+                    InputUserGenerator inputHandler = new InputUserGenerator(in);
+                    int numObjects = Controller.getNumberOfObjects();
+                    CustomClassType type = Controller.getCustomClassType();
+
+                    // Считываем данные
+                    List<CustomClass> objects = inputHandler.readObjects(type, numObjects);
+
+                    // Заносим данные
+                    switch (type) {
+                        case AUTOMOBILE:
+                            Controller.automobils.clear();
+                            Controller.automobils.addAll((List<Automobile>) (List<?>) objects);
+                            break;
+                        case BOOK:
+                            Controller.books.clear();
+                            Controller.books.addAll((List<Book>) (List<?>) objects);
+                            break;
+                        case ROOT_VEGETABLE:
+                            Controller.rootVegetables.clear();
+                            Controller.rootVegetables.addAll((List<RootVegetable>) (List<?>) objects);
+                            break;
+                        default:
+                            System.out.println("Неизвестный тип объекта.");
+                    }
+
+                    System.out.println("Объекты успешно добавлены.");
                     break;
                 case 4:
                     //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
@@ -57,16 +79,41 @@ public class View {
                     //размер массива определяется NumberOfObjects
                     break;
                 case 5:
-                    //должен создавать объекты случайной генерацией, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    InputRandomGenerator generator = new InputRandomGenerator();
+                    // генерация случайных объектов
+                    List<CustomClass> randomObjects = generator.generateRandomObjects(Controller.getCustomClassType(),
+                            Controller.getNumberOfObjects());
+
+                    // Проверка и добавление
+                    if (Controller.getCustomClassType() == CustomClassType.AUTOMOBILE) {
+                        for (CustomClass obj : randomObjects) {
+                            if (obj instanceof Automobile) {
+                                Controller.automobils.add((Automobile) obj);
+                            }
+                        }
+                    } else if (Controller.getCustomClassType() == CustomClassType.BOOK) {
+                        for (CustomClass obj : randomObjects) {
+                            if (obj instanceof Book) {
+                                Controller.books.add((Book) obj);
+                            }
+                        }
+                    } else if (Controller.getCustomClassType() == CustomClassType.ROOT_VEGETABLE) {
+                        for (CustomClass obj : randomObjects) {
+                            if (obj instanceof RootVegetable) {
+                                Controller.rootVegetables.add((RootVegetable) obj);
+                            }
+                        }
+                    }
+
+                    System.out.println("Случайные объекты добавлены.");
                     break;
+
                 case 6:
                     System.out.println("""
-                        * Для сортировки данных по возрастанию (shellSort) введите 1
-                        * Для сортировки данных по убыванию (shellSort) введите 2
-                        * Для использования альтернативного варианта сортировки введите 3
-                """);
+                                    * Для сортировки данных по возрастанию (shellSort) введите 1
+                                    * Для сортировки данных по убыванию (shellSort) введите 2
+                                    * Для использования альтернативного варианта сортировки введите 3
+                            """);
                     internalChoice = in.nextInt();
                     Controller.sort(internalChoice);
                     break;
