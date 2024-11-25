@@ -1,4 +1,8 @@
-public class Book extends CustomClass implements Comparable<Book>{
+import java.io.Serial;
+import java.io.Serializable;
+public class Book extends CustomClass implements Comparable<Book>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String author;
     private String name;
     private int numberOfPages;
@@ -17,6 +21,9 @@ public class Book extends CustomClass implements Comparable<Book>{
     }
     public String getAuthor() {
         return this.author;
+    }
+    public int getIntValueForCustomSort(){
+        return this.numberOfPages;
     }
 
     public void setAuthors(String author) {

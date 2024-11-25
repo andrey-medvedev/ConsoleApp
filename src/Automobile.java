@@ -1,4 +1,8 @@
-public class Automobile extends CustomClass implements Comparable<Automobile>, Cloneable {
+import java.io.Serial;
+import java.io.Serializable;
+public class Automobile extends CustomClass implements Comparable<Automobile>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private int power;
     private String model;
     private int yearOfProduction;
@@ -17,6 +21,9 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, C
     }
     public int getYearOfProduction(){
         return this.yearOfProduction;
+    }
+    public int getIntValueForCustomSort() {
+        return this.power;
     }
 
     public void setPower(int power){
@@ -37,21 +44,16 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, C
             return compareResult;
         }
 
-        compareResult = Integer.compare(this.yearOfProduction, o.getYearOfProduction());
+        compareResult = Integer.compare(this.power, o.getPower());
         if (compareResult != 0){
             return compareResult;
         }
 
-        return Integer.compare(this.power, o.getPower());
+        return Integer.compare(this.yearOfProduction, o.getYearOfProduction());
     }
 
     @Override
     public String toString(){
         return String.format("This Automobile model = '%s', power = %d, year of production = %d", this.model, this.power, this.yearOfProduction);
-    }
-
-    @Override
-    public Automobile clone() throws CloneNotSupportedException {
-        return (Automobile) super.clone();
     }
 }

@@ -1,4 +1,9 @@
-public class RootVegetable extends CustomClass implements Comparable<RootVegetable>{
+import java.io.Serial;
+import java.io.Serializable;
+
+public class RootVegetable extends CustomClass implements Comparable<RootVegetable>, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     private String color;
     private String type;
     private int weight;
@@ -17,6 +22,9 @@ public class RootVegetable extends CustomClass implements Comparable<RootVegetab
     }
     public String getType() {
         return this.type;
+    }
+    public int getIntValueForCustomSort(){
+        return this.weight;
     }
 
     public void setColor(String color) {
@@ -42,11 +50,6 @@ public class RootVegetable extends CustomClass implements Comparable<RootVegetab
         }
 
         return Integer.compare(this.weight, o.getWeight());
-    }
-
-    @Override
-    public RootVegetable clone() throws CloneNotSupportedException {
-        return (RootVegetable) super.clone();
     }
 
     @Override
