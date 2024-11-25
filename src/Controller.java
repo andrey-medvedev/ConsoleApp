@@ -26,15 +26,7 @@ public class Controller <T extends CustomClass & Comparable<T>> {
     public static ArrayList<Book> books = new ArrayList<>();
 
     //пока поиграемся с ручными данными
-    public static ArrayList<Automobile> automobils = new ArrayList<>(List.of(
-            new Automobile(400, "BMW", 1990),
-            new Automobile(400, "BMW", 1991),
-            new Automobile(410, "Mercedes", 1995),
-            new Automobile(390, "Opel", 1996),
-            new Automobile(500, "BMW", 1992),
-            new Automobile(350, "BMW", 1991),
-            new Automobile(310, "Mercedes", 1992),
-            new Automobile(405, "Opel", 1996)));
+    public static ArrayList<Automobile> automobils = new ArrayList<>();
 
 
     public static boolean sort(int mode){

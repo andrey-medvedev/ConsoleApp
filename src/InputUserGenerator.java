@@ -79,15 +79,15 @@ public class InputUserGenerator {
     }
 
     private Book readBook() {
-        String title = "";
+        String bookName = "";
         String author = "";
         int year = -1;
 
         // Ввод данных для книги с проверкой
-        while (title.isEmpty()) {
+        while (bookName.isEmpty()) {
             System.out.println("Введите название книги: ");
-            title = scanner.nextLine();
-            if (title.isEmpty()) {
+            bookName = scanner.nextLine();
+            if (bookName.isEmpty()) {
                 System.out.println("Название книги не может быть пустым.");
             }
         }
@@ -113,7 +113,7 @@ public class InputUserGenerator {
             }
         }
 
-        return new Book(title, author, year);
+        return new Book(bookName, author, year);
     }
 
     private RootVegetable readRootVegetable() {
