@@ -3,11 +3,29 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Controller <T extends CustomClass & Comparable<T>> {
-    public static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
-    public static int numberOfObjects = 5;
+    private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
+    private static int numberOfObjects = 5;
+
+    public static void setNumberOfObjects (int numberOfObjects) throws IllegalArgumentException {
+        if (numberOfObjects <= 0){
+            throw new IllegalArgumentException("Передано некорректное значение");
+        } else {
+            Controller.numberOfObjects = numberOfObjects;
+        }
+    }
+
+    public static int getNumberOfObjects(){
+        return Controller.numberOfObjects;
+    }
+
+    public static CustomClassType getCustomClassType(){
+        return Controller.customClassType;
+    }
 
     public static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
     public static ArrayList<Book> books = new ArrayList<>();
+
+    //пока поиграемся с ручными данными
     public static ArrayList<Automobile> automobils = new ArrayList<>(List.of(new Automobile(400, "BMW", 1990),
             new Automobile(400, "BMW", 1991),
             new Automobile(410, "Mercedes", 1995),
@@ -19,7 +37,6 @@ public class Controller <T extends CustomClass & Comparable<T>> {
 
 
     public static boolean sort(int mode){
-
         switch (mode){
             case 1:
                 if (Controller.customClassType == CustomClassType.BOOK) {
@@ -69,7 +86,24 @@ public class Controller <T extends CustomClass & Comparable<T>> {
                 System.out.println(rootVegetable);
             }
         }
-
+        System.out.println("\n\n\n");
     }
 
+    public static <T extends CustomClass & Comparable<T>> void search(T object){
+        int objectIndex = 0;
+        if (Controller.customClassType == CustomClassType.BOOK) {
+            objectIndex = CustomClassOperations.binarySearchIndex(books,  (Book)object);
+        } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
+            objectIndex = CustomClassOperations.binarySearchIndex(automobils,  (Automobile)object);
+        } else {
+            objectIndex = CustomClassOperations.binarySearchIndex(rootVegetables,  (RootVegetable)object);
+        }
+        if (objectIndex != -1){
+            System.out.printf("Элемент найден в коллекции. Его индекс: %d", objectIndex);
+        }
+    }
+
+    public static void setCustomClassType(CustomClassType type){
+        Controller.customClassType = type;
+    }
 }

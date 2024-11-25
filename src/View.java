@@ -20,7 +20,7 @@ public class View {
                     * Для поиска объекта в данных (с возможностью экспорта результатов) введите 7;
                     * Для просмотра текущих данных введите 8
                     * Для выхода из программы введите 9
-                    """, Controller.customClassType.toString(), Controller.numberOfObjects);
+                    """, Controller.getCustomClassType().toString(), Controller.getNumberOfObjects());
 
             userChoice = 0;
             userChoice = in.nextInt();
@@ -31,24 +31,33 @@ public class View {
 
             switch (userChoice){
                 case 1:
-                    //тут просто меняем значение ENUM-a
+                    System.out.println("Введите новое значение для типа объекта (1 - автомобиль, 2 - книга, 3 - корнеплод)");
+                    int internalChoice = in.nextInt();
+                    if (internalChoice == 1){
+                        Controller.setCustomClassType(CustomClassType.AUTOMOBILE);
+                    } else if (internalChoice == 2){
+                        Controller.setCustomClassType(CustomClassType.BOOK);
+                    } else {
+                        Controller.setCustomClassType(CustomClassType.ROOT_VEGETABLE);
+                    }
                     break;
                 case 2:
-                    //тут просто меняем значение numberOfObjects
-                    //при передаче значения < 0 кидаем исключение в контроллере
+                    System.out.println("Введите количество элементов в коллекции");
+                    internalChoice = in.nextInt();
+                    Controller.setNumberOfObjects(internalChoice);
                     break;
                 case 3:
-                    //должен очищать массив userObjects и заполнять его новыми объектами, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
+                    //должен считывать объекты с консоли, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
                     //При вводе объектов необходима валидация
                     //размер массива определяется NumberOfObjects
                     break;
                 case 4:
-                    //должен очищать массив userObjects и заполнять его новыми объектами, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
+                    //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
                     //При вводе объектов необходима валидация
                     //размер массива определяется NumberOfObjects
                     break;
                 case 5:
-                    //должен очищать массив userObjects и заполнять его новыми объектами, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
+                    //должен создавать объекты случайной генерацией, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
                     //При вводе объектов необходима валидация
                     //размер массива определяется NumberOfObjects
                     break;
@@ -58,10 +67,13 @@ public class View {
                         * Для сортировки данных по убыванию (shellSort) введите 2
                         * Для использования альтернативного варианта сортировки введите 3
                 """);
-                    var mode = in.nextInt();
-                    Controller.sort(mode);
+                    internalChoice = in.nextInt();
+                    Controller.sort(internalChoice);
                     break;
                 case 7:
+                    //Должен считывать один объект с консоли (соответственно, сначала должен быть реализован п. 3)
+                    //передать в метод ниже считанный объект
+                    Controller.search(new Book("", "", 1));
                     break;
                 case 8:
                     Controller.printData();

@@ -51,6 +51,5 @@ public class CustomClassOperations {
         }
         return -1;
     }
-
 }
 
