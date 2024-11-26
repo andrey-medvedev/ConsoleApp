@@ -47,9 +47,7 @@ public class View {
                     Controller.setNumberOfObjects(internalChoice);
                     break;
                 case 3:
-                    //должен считывать объекты с консоли, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    Controller.readObjectsFromConsole();
                     break;
                 case 4:
                     //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
@@ -57,9 +55,7 @@ public class View {
                     //размер массива определяется NumberOfObjects
                     break;
                 case 5:
-                    //должен создавать объекты случайной генерацией, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    Controller.readObjectsFromRandom();
                     break;
                 case 6:
                     System.out.println("""
@@ -71,11 +67,10 @@ public class View {
                     Controller.sort(internalChoice);
                     break;
                 case 7:
-                    //Должен считывать один объект с консоли (соответственно, сначала должен быть реализован п. 3)
-                    //передать в метод ниже считанный объект
-                    Controller.search(new Book("", "", 1));
+                    Controller.search();
                     break;
                 case 8:
+                    System.out.println("Текущие данные имеют следующий вид: ");
                     Controller.printData();
                     break;
                 default:

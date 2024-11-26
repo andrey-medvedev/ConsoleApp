@@ -1,16 +1,65 @@
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
-public class Controller <T extends CustomClass & Comparable<T>> {
+public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
-    private static int numberOfObjects = 5;
+    private static CustomClassBuilder builder = new CustomClassBuilder(new AutoBuilder());
 
-    public static void setNumberOfObjects (int numberOfObjects) throws IllegalArgumentException {
-        if (numberOfObjects <= 0){
-            throw new IllegalArgumentException("Передано некорректное значение");
-        } else {
-            Controller.numberOfObjects = numberOfObjects;
+    private static int numberOfObjects = 5;
+    private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
+    private static ArrayList<Automobile> automobils = new ArrayList<>();
+
+    private Controller(){
+    }
+
+    public static void readObjectsFromConsole(){
+        Controller.clearCustomClassLists();
+        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
+            Controller.addCustomClassObject(builder.buildFromConsole());
+        }
+    }
+
+    public static void readObjectsFromRandom(){
+        Controller.clearCustomClassLists();
+        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
+            Controller.addCustomClassObject(builder.buildFromRandom());
+        }
+    }
+
+    public static void search(){
+        CustomClass searchObject = builder.buildFromConsole();
+
+        switch (customClassType){
+            case CustomClassType.AUTOMOBILE -> {
+                CustomClassOperations.binarySearch(automobils, (Automobile) searchObject);
+            }
+            case CustomClassType.BOOK -> {
+                CustomClassOperations.binarySearch(books, (Book) searchObject);
+            }
+            case CustomClassType.ROOT_VEGETABLE -> {
+                CustomClassOperations.binarySearch(rootVegetables, (RootVegetable) searchObject);
+            }
+        }
+
+    }
+
+    private static void clearCustomClassLists(){
+            Controller.automobils.clear();
+            Controller.books.clear();
+            Controller.rootVegetables.clear();
+    }
+
+    private static void addCustomClassObject(CustomClass object){
+        switch (customClassType){
+            case CustomClassType.AUTOMOBILE -> {
+                Controller.automobils.add((Automobile) object);
+            }
+            case CustomClassType.BOOK -> {
+                Controller.books.add((Book) object);
+            }
+            case CustomClassType.ROOT_VEGETABLE -> {
+                Controller.rootVegetables.add((RootVegetable) object);
+            }
         }
     }
 
@@ -18,23 +67,35 @@ public class Controller <T extends CustomClass & Comparable<T>> {
         return Controller.numberOfObjects;
     }
 
+    public static void setNumberOfObjects (int numberOfObjects)  {
+        if (numberOfObjects <= 0){
+            System.out.println("""
+        Значение не может быть <= 0. 
+        Было установлено минимальное возможное значение, равное 1""");
+            Controller.numberOfObjects = 1;
+        } else {
+            Controller.numberOfObjects = numberOfObjects;
+        }
+    }
+
     public static CustomClassType getCustomClassType(){
         return Controller.customClassType;
     }
 
-    public static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
-    public static ArrayList<Book> books = new ArrayList<>();
-
-    //пока поиграемся с ручными данными
-    public static ArrayList<Automobile> automobils = new ArrayList<>(List.of(new Automobile(400, "BMW", 1990),
-            new Automobile(400, "BMW", 1991),
-            new Automobile(410, "Mercedes", 1995),
-            new Automobile(390, "Opel", 1996),
-            new Automobile(500, "BMW", 1992),
-            new Automobile(350, "BMW", 1991),
-            new Automobile(310, "Mercedes", 1992),
-            new Automobile(405, "Opel", 1996)));
-
+    public static void setCustomClassType(CustomClassType type){
+        Controller.customClassType = type;
+        switch (type){
+            case CustomClassType.AUTOMOBILE -> {
+                Controller.builder.setBuilder(new AutoBuilder());
+            }
+            case CustomClassType.BOOK -> {
+                Controller.builder.setBuilder(new BookBuilder());
+            }
+            case CustomClassType.ROOT_VEGETABLE -> {
+                Controller.builder.setBuilder(new RootVegetableBuilder());
+            }
+        }
+    }
 
     public static boolean sort(int mode){
         switch (mode){
@@ -66,7 +127,7 @@ public class Controller <T extends CustomClass & Comparable<T>> {
                 }
                 break;
             default:
-                System.out.println("Некорректный ввод");
+                System.out.println("В метод передано некорректное значение!");
                 return false;
         }
         return true;
@@ -87,23 +148,5 @@ public class Controller <T extends CustomClass & Comparable<T>> {
             }
         }
         System.out.println("\n\n\n");
-    }
-
-    public static <T extends CustomClass & Comparable<T>> void search(T object){
-        int objectIndex = 0;
-        if (Controller.customClassType == CustomClassType.BOOK) {
-            objectIndex = CustomClassOperations.binarySearchIndex(books,  (Book)object);
-        } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-            objectIndex = CustomClassOperations.binarySearchIndex(automobils,  (Automobile)object);
-        } else {
-            objectIndex = CustomClassOperations.binarySearchIndex(rootVegetables,  (RootVegetable)object);
-        }
-        if (objectIndex != -1){
-            System.out.printf("Элемент найден в коллекции. Его индекс: %d", objectIndex);
-        }
-    }
-
-    public static void setCustomClassType(CustomClassType type){
-        Controller.customClassType = type;
     }
 }

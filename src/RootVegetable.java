@@ -54,6 +54,6 @@ public class RootVegetable extends CustomClass implements Comparable<RootVegetab
 
     @Override
     public String toString(){
-        return String.format("This RootVegetable color = '%s', type = '%s', weight = %d", this.color, this.type, this.weight);
+        return String.format("This RootVegetable type = '%s', color = '%s', weight = %d", this.type, this.color, this.weight);
     }
 }
