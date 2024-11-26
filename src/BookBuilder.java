@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 import java.util.Scanner;
 public class BookBuilder implements Builder<Book> {
 
@@ -15,11 +16,19 @@ public class BookBuilder implements Builder<Book> {
     }
 
     public Book buildFromRandom(){
-        Map<String[], Integer> books = Map.of(new String[] {"Достоевский Ф.М.", "Преступление и наказание"}, 465, new String[] {"Пушкин А.С.", "Капитанская дочка"}, 348 , new String[] {"Лермонтов Р.М.", "герой нашего времени"}, 183, new String[] {"Карамзин Н.М.", "Бедная Лиза"}, 279, new String[] {"Салтыков-Щедрин М.Е.", "Дикий помещик"}, 286);
-        Map.Entry<String[], Integer> entry = books.entrySet().stream().findAny().orElse(null);
-        String author = entry.getKey()[0];
-        String name = entry.getKey()[1];
-        int numberOfPages = entry.getValue();
+        Random rand = new Random();
+
+        Object[][] books = {{"Достоевский Ф.М.", "Преступление и наказание",  465},
+                {"Пушкин А.С.", "Капитанская дочка", 348},
+                {"Лермонтов Р.М.", "герой нашего времени", 183},
+                {"Карамзин Н.М.", "Бедная Лиза", 279},
+                {"Салтыков-Щедрин М.Е.", "Дикий помещик", 286}};
+
+        Object[] book = books[rand.nextInt(books.length)];
+        String author = (String) book[0];
+        String name = (String) book[1];
+        int numberOfPages = (int) book[2];
+
         return new Book(author, name, numberOfPages);
     }
 

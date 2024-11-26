@@ -38,16 +38,16 @@ public class CustomClassOperations {
         shellSort(copyArray, true);
         boolean flag = false;
 
-        int low = 0;
+        int lower = 0;
         int high = copyArray.size() - 1;
-        while (low <= high) {
-            int mid = (low + high) / 2;
+        while (lower <= high) {
+            int middle = (lower + high) / 2;
 
-            if (copyArray.get(mid).compareTo(object) > 0) {
-                high = mid - 1;
-            } else if (copyArray.get(mid).compareTo(object) < 0) {
+            if (copyArray.get(middle).compareTo(object) > 0) {
+                high = middle - 1;
+            } else if (copyArray.get(middle).compareTo(object) < 0) {
 
-                low = mid + 1;
+                lower = middle + 1;
             } else {
                 flag = true;
                 break;
