@@ -1,3 +1,6 @@
+import org.w3c.dom.ls.LSOutput;
+
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -9,7 +12,6 @@ public class CustomClassOperations {
 
     public static <T extends CustomClass & Comparable<T>> void shellSort (ArrayList<T> array, boolean isNotReverseSort){
         int compareCoefficient = isNotReverseSort ? 1 : -1;
-
         for (int s = array.size() / 2; s > 0; s /= 2) {
             for (int i = s; i < array.size(); ++i){
                 for (int j = i - s; j >= 0 && compareCoefficient * (array.get(j).compareTo(array.get(j + s))) > 0; j -= s){
@@ -31,9 +33,10 @@ public class CustomClassOperations {
         }
     }
 
-    public static <T extends CustomClass & Comparable<T>> int binarySearchIndex (ArrayList<T> array, T object){
+    public static <T extends CustomClass & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
         ArrayList<T> copyArray = new ArrayList<>(array);
         shellSort(copyArray, true);
+        boolean flag = false;
 
         int low = 0;
         int high = copyArray.size() - 1;
@@ -46,10 +49,11 @@ public class CustomClassOperations {
 
                 low = mid + 1;
             } else {
-                return mid;
+                flag = true;
+                break;
             }
         }
-        return -1;
+        System.out.println("Элемент был " + (!flag ? "не " : "") + "найден в коллекции!");
     }
 }
 
