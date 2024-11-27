@@ -7,7 +7,7 @@ public class Controller {
     private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Automobile> automobils = new ArrayList<>();
-    private static User user;
+    private static String filePath = "C:\\Users\\icefo\\SaveObjects.txt";
 
     private Controller(){
     }
@@ -21,7 +21,7 @@ public class Controller {
 
     public static void readObjectsFromFile(){
         Controller.clearCustomClassLists();
-        for(var object : builder.buildFromFile(Controller.user.getFilePath())){
+        for(var object : builder.buildFromFile(Controller.filePath)){
             Controller.addCustomClassObject((CustomClass) object);
         }
     }
@@ -73,13 +73,13 @@ public class Controller {
     public static void saveDataToFile(){
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
-                CustomClassOperations.serializeArray(Controller.automobils, Controller.user.getFilePath());
+                CustomClassOperations.serializeArray(Controller.automobils, Controller.filePath);
             }
             case CustomClassType.BOOK -> {
-                CustomClassOperations.serializeArray(Controller.books, Controller.user.getFilePath());
+                CustomClassOperations.serializeArray(Controller.books, Controller.filePath);
             }
             case CustomClassType.ROOT_VEGETABLE -> {
-                CustomClassOperations.serializeArray(Controller.rootVegetables, Controller.user.getFilePath());
+                CustomClassOperations.serializeArray(Controller.rootVegetables, Controller.filePath);
             }
         }
     }
@@ -87,30 +87,33 @@ public class Controller {
     public static boolean sort(int mode){
         switch (mode){
             case 1:
+                CustomClassOperations.setSort(ShellSort.getInstance());
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.shellSort(books, true, null);
+                    CustomClassOperations.getSort().sort(books, true, null);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.shellSort(automobils, true, null);
+                    CustomClassOperations.getSort().sort(automobils, true, null);
                 } else{
-                    CustomClassOperations.shellSort(rootVegetables, true, null);
+                    CustomClassOperations.getSort().sort(rootVegetables, true, null);
                 }
                 break;
             case 2:
+                CustomClassOperations.setSort(ShellSort.getInstance());
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.shellSort(books, false, null);
+                    CustomClassOperations.getSort().sort(books, false, null);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.shellSort(automobils, false, null);
+                    CustomClassOperations.getSort().sort(automobils, false, null);
                 } else{
-                    CustomClassOperations.shellSort(rootVegetables, false, null);
+                    CustomClassOperations.getSort().sort(rootVegetables, false, null);
                 }
                 break;
             case 3:
+                CustomClassOperations.setSort(CustomSort.getInstance());
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.customSort(books);
+                    CustomClassOperations.getSort().sort(books, false, null);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.customSort(automobils);
+                    CustomClassOperations.getSort().sort(automobils, false, null);
                 } else{
-                    CustomClassOperations.customSort(rootVegetables);
+                    CustomClassOperations.getSort().sort(rootVegetables, false, null);
                 }
                 break;
             default:
@@ -169,13 +172,5 @@ public class Controller {
                 Controller.builder.setBuilder(new RootVegetableBuilder());
             }
         }
-    }
-
-    public static void setUser(User user) {
-        Controller.user = user;
-    }
-
-    public static User getUser(){
-        return user;
     }
 }
