@@ -19,7 +19,7 @@ public class CustomClassBuilder <T extends CustomClass & Comparable<T>>{
         return this.builder.readValuesFromRandom(number).build();
     }
 
-    public ArrayList<T> buildFromFile(){
-        return this.builder.readValuesFromFile().build();
+    public ArrayList<T> buildFromFile(String path){
+        return this.builder.readValuesFromFile(path).build();
     }
 }

@@ -1,4 +1,5 @@
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -7,8 +8,34 @@ public class View {
 
     public static void main(String[] args) {
 
-        int userChoice;
+        System.out.println("""
+                            Выберите пользователя:
+                            1 - Ростислав
+                            2 - Андрей
+                            3 - Ярослав
+                            4 - Post VID""");
+        int userChoice = 0;
         Scanner in = new Scanner(System.in);
+        userChoice = in.nextInt();
+
+        switch (userChoice){
+            case 1:
+                Controller.setUser(Rostislav.getInstance());
+                break;
+            case 2:
+                Controller.setUser(Andrey.getInstance());
+                break;
+            case 3:
+                Controller.setUser(Yaroslav.getInstance());
+                break;
+            case 4:
+                Controller.setUser(Post_VID.getInstance());
+                break;
+            default:
+                System.out.println("Некорректный ввод!");
+        }
+
+        System.out.printf("Добрый день, %s!\n\n\n1", Controller.getUser().getName());
 
         while(true){
             System.out.printf("""
@@ -17,16 +44,16 @@ public class View {
                     * Введите 3 для ввода объектов с консоли;
                     * Введите 4 для ввода объектов из файла;
                     * Введите 5 для ввода объектов случайной генерацией;
-                    * Введите 6 для сортировки объектов (с возможностью экспорта результатов);
-                    * Введите 7 для поиска объекта в данных (с возможностью экспорта результатов);
+                    * Введите 6 для сортировки объектов;
+                    * Введите 7 для поиска объекта в данных;
                     * Введите 8 для просмотра текущих данных
-                    * Введите 9 для выхода из программы
+                    * Введите 9 для сохранения текущих данных в файл
+                    * Введите 10 для выхода из программы
                     """, Controller.getCustomClassType().toString(), Controller.getNumberOfObjects());
 
-            userChoice = 0;
             userChoice = in.nextInt();
 
-            if (userChoice == 9){
+            if (userChoice == 10){
                 break;
             }
 
@@ -51,9 +78,7 @@ public class View {
                     Controller.readObjectsFromConsole();
                     break;
                 case 4:
-                    //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    Controller.readObjectsFromFile();
                     break;
                 case 5:
                     Controller.readObjectsFromRandom();
@@ -73,6 +98,9 @@ public class View {
                 case 8:
                     System.out.println("Текущие данные имеют следующий вид: ");
                     Controller.printData();
+                    break;
+                case 9:
+                    Controller.saveDataToFile();
                     break;
                 default:
                     System.out.println("Некорректный ввод!");

@@ -1,5 +1,6 @@
 import org.w3c.dom.ls.LSOutput;
 
+import java.io.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -53,7 +54,26 @@ public class CustomClassOperations {
                 break;
             }
         }
-        System.out.println("Элемент был " + (!flag ? "не " : "") + "найден в коллекции!");
+        System.out.println("Элемент " + (!flag ? "не " : "") + "был найден в коллекции!");
+    }
+
+    public static <T extends CustomClass & Serializable> void serializeArray (ArrayList<T> array, String path){
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
+            out.writeObject(array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T extends CustomClass & Serializable> ArrayList<T> deserializeArray (String path){
+        ArrayList<T> deserializedArray = new ArrayList<>();
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            deserializedArray = (ArrayList<T>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return deserializedArray;
     }
 }
 

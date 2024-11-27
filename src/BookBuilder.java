@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 public class BookBuilder implements Builder<Book> {
 
-    private ArrayList<Book> objects = new ArrayList<>();
+    private final ArrayList<Book> objects = new ArrayList<>();
 
     public BookBuilder readValuesFromConsole(int number) {
         objects.clear();
@@ -41,10 +41,20 @@ public class BookBuilder implements Builder<Book> {
         return this;
     }
 
-    public BookBuilder readValuesFromFile(){
+    public BookBuilder readValuesFromFile(String path){
         objects.clear();
-        //при считывании файла валидировать, чтобы в нем было объектов (строк) не менее чем значение Contriller.numberOfObjects
-        //Если меньше, то предлагать изменить переменную автоматически (и менять в соответствии с объемом)
+
+        for (var book : CustomClassOperations.deserializeArray(path)) {
+            objects.add((Book) book);
+        }
+
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
+        }
+
         return this;
     }
 
