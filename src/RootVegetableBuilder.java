@@ -3,7 +3,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public class RootVegetableBuilder implements Builder<RootVegetable> {
-    private ArrayList<RootVegetable> objects = new ArrayList<>();
+    private final ArrayList<RootVegetable> objects = new ArrayList<>();
 
     public RootVegetableBuilder readValuesFromConsole(int number) {
         Scanner in = new Scanner(System.in);
@@ -36,10 +36,20 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
         return this;
     }
 
-    public RootVegetableBuilder readValuesFromFile(){
+    public RootVegetableBuilder readValuesFromFile(String path){
         objects.clear();
-        //при считывании файла валидироть, чтобы в нем было объектов (строк) не менее чем значение Contriller.numberOfObjects
-        //Если меньше, то предлагать изменить переменную автоматически (и менять в соответствии с объемом)
+
+        for (var rootVegetable : CustomClassOperations.deserializeArray(path)) {
+            objects.add((RootVegetable) rootVegetable);
+        }
+
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
+        }
+
         return this;
     }
 

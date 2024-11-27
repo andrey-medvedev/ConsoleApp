@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class AutoBuilder implements Builder<Automobile> {
 
-    private ArrayList<Automobile> objects = new ArrayList<Automobile>();
+    private final ArrayList<Automobile> objects = new ArrayList<Automobile>();
 
     public AutoBuilder readValuesFromConsole(int number) {
         objects.clear();
@@ -36,10 +36,20 @@ public class AutoBuilder implements Builder<Automobile> {
         return this;
     }
 
-    public AutoBuilder readValuesFromFile(){
+    public AutoBuilder readValuesFromFile(String path){
         objects.clear();
-        //при считывании файла валидироть, чтобы в нем было объектов (строк) не менее чем значение Contriller.numberOfObjects
-        //Если меньше, то предлагать изменить переменную автоматически (и менять в соответствии с объемом)
+
+        for (var auto : CustomClassOperations.deserializeArray(path)) {
+            objects.add((Automobile) auto);
+        }
+
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
+        }
+
         return this;
     }
 

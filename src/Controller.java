@@ -7,6 +7,7 @@ public class Controller {
     private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Automobile> automobils = new ArrayList<>();
+    private static User user;
 
     private Controller(){
     }
@@ -14,6 +15,13 @@ public class Controller {
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
         for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
+            Controller.addCustomClassObject((CustomClass) object);
+        }
+    }
+
+    public static void readObjectsFromFile(){
+        Controller.clearCustomClassLists();
+        for(var object : builder.buildFromFile(Controller.user.getFilePath())){
             Controller.addCustomClassObject((CustomClass) object);
         }
     }
@@ -62,36 +70,16 @@ public class Controller {
         }
     }
 
-    public static int getNumberOfObjects(){
-        return Controller.numberOfObjects;
-    }
-
-    public static void setNumberOfObjects (int numberOfObjects)  {
-        if (numberOfObjects <= 0){
-            System.out.println("""
-        Значение не может быть <= 0. 
-        Было установлено минимальное возможное значение, равное 1""");
-            Controller.numberOfObjects = 1;
-        } else {
-            Controller.numberOfObjects = numberOfObjects;
-        }
-    }
-
-    public static CustomClassType getCustomClassType(){
-        return Controller.customClassType;
-    }
-
-    public static void setCustomClassType(CustomClassType type){
-        Controller.customClassType = type;
-        switch (type){
+    public static void saveDataToFile(){
+        switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
-                Controller.builder.setBuilder(new AutoBuilder());
+                CustomClassOperations.serializeArray(Controller.automobils, Controller.user.getFilePath());
             }
             case CustomClassType.BOOK -> {
-                Controller.builder.setBuilder(new BookBuilder());
+                CustomClassOperations.serializeArray(Controller.books, Controller.user.getFilePath());
             }
             case CustomClassType.ROOT_VEGETABLE -> {
-                Controller.builder.setBuilder(new RootVegetableBuilder());
+                CustomClassOperations.serializeArray(Controller.rootVegetables, Controller.user.getFilePath());
             }
         }
     }
@@ -147,5 +135,47 @@ public class Controller {
             }
         }
         System.out.println("\n\n\n");
+    }
+
+    public static int getNumberOfObjects(){
+        return Controller.numberOfObjects;
+    }
+
+    public static void setNumberOfObjects (int numberOfObjects)  {
+        if (numberOfObjects <= 0){
+            System.out.println("""
+        Значение не может быть <= 0. 
+        Было установлено минимальное возможное значение, равное 1""");
+            Controller.numberOfObjects = 1;
+        } else {
+            Controller.numberOfObjects = numberOfObjects;
+        }
+    }
+
+    public static CustomClassType getCustomClassType(){
+        return Controller.customClassType;
+    }
+
+    public static void setCustomClassType(CustomClassType type){
+        Controller.customClassType = type;
+        switch (type){
+            case CustomClassType.AUTOMOBILE -> {
+                Controller.builder.setBuilder(new AutoBuilder());
+            }
+            case CustomClassType.BOOK -> {
+                Controller.builder.setBuilder(new BookBuilder());
+            }
+            case CustomClassType.ROOT_VEGETABLE -> {
+                Controller.builder.setBuilder(new RootVegetableBuilder());
+            }
+        }
+    }
+
+    public static void setUser(User user) {
+        Controller.user = user;
+    }
+
+    public static User getUser(){
+        return user;
     }
 }
