@@ -1,5 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
+
 public class Book extends CustomClass implements Comparable<Book>, Serializable, CsvConvertable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -7,7 +8,7 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable,
     private String name;
     private int numberOfPages;
 
-    public Book (String author, String name, int numberOfPages){
+    public Book(String author, String name, int numberOfPages) {
         this.author = author;
         this.name = name;
         this.numberOfPages = numberOfPages;
@@ -16,19 +17,23 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable,
     public String getName() {
         return this.name;
     }
+
     public int getNumberOfPages() {
         return this.numberOfPages;
     }
+
     public String getAuthor() {
         return this.author;
     }
-    public int getIntValueForCustomSort(){
+
+    public int getIntValueForCustomSort() {
         return this.numberOfPages;
     }
 
     public void setAuthors(String author) {
         this.author = author;
     }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -38,14 +43,14 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable,
     }
 
     @Override
-    public int compareTo(Book o){
+    public int compareTo(Book o) {
         int compareResult = this.author.compareTo(o.getAuthor());
-        if (compareResult != 0){
+        if (compareResult != 0) {
             return compareResult;
         }
 
         compareResult = this.name.compareTo(o.getName());
-        if (compareResult != 0){
+        if (compareResult != 0) {
             return compareResult;
         }
 
@@ -53,12 +58,14 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable,
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return String.format("This Book author = '%s', name = '%s', number of pages = %d", this.author, this.name, this.numberOfPages);
     }
+
     public String toCSV() {
         return author + "," + name + "," + numberOfPages;
     }
+
     @Override
     public String getCSVHeaders() {
         return "Автор ,Название книги ,Количество страниц";
@@ -66,10 +73,11 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable,
 
     @Override
     public void fromCSV(String[] fields) {
-            if (fields.length == 3) {
-                this.author = fields[0];
-                this.name = fields[1];
-                this.numberOfPages = Integer.parseInt(fields[2]);
-            }
+        if (fields.length == 3) {
+            this.author = fields[0];
+            this.name = fields[1];
+            this.numberOfPages = Integer.parseInt(fields[2]);
+        }
+
     }
 }

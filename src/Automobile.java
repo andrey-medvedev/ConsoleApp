@@ -1,14 +1,13 @@
 import java.io.Serial;
 import java.io.Serializable;
-
-public class Automobile extends CustomClass implements Comparable<Automobile>, Serializable, CsvConvertable {
+public class Automobile extends CustomClass implements Comparable<Automobile>, Serializable, CsvConvertable{
     @Serial
     private static final long serialVersionUID = 1L;
     private int power;
     private String model;
     private int yearOfProduction;
 
-    public Automobile(int power, String model, int yearOfProduction) {
+    public Automobile(int power, String model, int yearOfProduction){
         this.power = power;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -17,41 +16,36 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, S
     public int getPower() {
         return this.power;
     }
-
-    public String getModel() {
+    public String getModel(){
         return this.model;
     }
-
-    public int getYearOfProduction() {
+    public int getYearOfProduction(){
         return this.yearOfProduction;
     }
-
     public int getIntValueForCustomSort() {
         return this.power;
     }
 
-    public void setPower(int power) {
+    public void setPower(int power){
         this.power = power;
     }
-
-    public void setModel(String model) {
+    public void setModel(String model){
         this.model = model;
     }
-
     public void setYearOfProduction(int yearOfProduction) {
         this.yearOfProduction = yearOfProduction;
     }
 
     @Override
-    public int compareTo(Automobile o) {
+    public int compareTo(Automobile o){
 
         int compareResult = this.model.compareTo(o.getModel());
-        if (compareResult != 0) {
+        if (compareResult != 0){
             return compareResult;
         }
 
         compareResult = Integer.compare(this.power, o.getPower());
-        if (compareResult != 0) {
+        if (compareResult != 0){
             return compareResult;
         }
 
@@ -59,8 +53,8 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, S
     }
 
     @Override
-    public String toString() {
-        return String.format("This Automobile power = %d, model = '%s',  year of production = %d", this.power, this.model, this.yearOfProduction);
+    public String toString(){
+        return String.format("This Automobile power = %d, model = '%s',  year of production = %d",this.power, this.model,  this.yearOfProduction);
     }
 
     public String toCSV() {
@@ -78,6 +72,7 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, S
             this.model = fields[1];
             this.yearOfProduction = Integer.parseInt(fields[2]);
         }
+
+
     }
 }
-

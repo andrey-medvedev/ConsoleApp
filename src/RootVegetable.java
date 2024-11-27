@@ -59,30 +59,28 @@ public class RootVegetable extends CustomClass implements Comparable<RootVegetab
 
     @Override
     public String toString() {
-        return String.format("Корнеплод типа  = '%s', цвет = '%s', вес (в граммах) = %d",
-                this.type, this.color, this.weight);
+        return String.format("This RootVegetable type = '%s', color = '%s', weight = %d", this.type, this.color, this.weight);
     }
 
     @Override
     public String toCSV() {
-        return color + "," + type + "," + weight;
+        return type + "," + color +  "," + weight;
     }
 
     @Override
     public String getCSVHeaders() {
-        return "Цвет ,Тип корнеплода , Вес (в граммах)";
+        return "Тип корнеплода, Цвет, Вес (в граммах)";
     }
 
     @Override
     public void fromCSV(String[] fields) {
         {
             if (fields.length == 3) {
-                this.color = fields[0];
-                this.type = fields[1];
+
+                this.type = fields[0];
+                this.color = fields[1];
                 this.weight = Integer.parseInt(fields[2]);
             }
         }
-
-
     }
 }

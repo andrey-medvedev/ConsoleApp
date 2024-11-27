@@ -21,7 +21,7 @@ public class InputCsv {
             // Проверяем на совпадение
             if (!isValidHeader(header, clazz)) {
                 System.out.println("Ошибка: Заголовок не соответствует ожидаемому формату.");
-                return objects; // Если не совпал.
+                return objects;
             }
 
 
@@ -33,7 +33,7 @@ public class InputCsv {
                 if (clazz == Automobile.class) {
                     if (fields.length == 3) {
                         try {
-                            // Проверка типов данных для автомобиля
+
                             int power = Integer.parseInt(fields[0]);
                             String model = fields[1];
                             int yearOfProduction = Integer.parseInt(fields[2]);
@@ -64,10 +64,11 @@ public class InputCsv {
                 } else if (clazz == RootVegetable.class) {
                     if (fields.length == 3) {
                         try {
-                            String color = fields[0];
-                            String name = fields[1];
+
+                            String name = fields[0];
+                            String color = fields[1];
                             int weight = Integer.parseInt(fields[2]);
-                            RootVegetable rootVegetable = new RootVegetable(color, name, weight);
+                            RootVegetable rootVegetable = new RootVegetable(name, color, weight);
                             objects.add((T) rootVegetable);
                         } catch (NumberFormatException e) {
                             System.out.println("Ошибка в данных для типа КОРНЕПЛОДЫ: " + e.getMessage());
@@ -98,7 +99,7 @@ public class InputCsv {
             case "Book":
                 return header.equals("Автор, Название книги, Количество страниц");
             case "RootVegetable":
-                return header.equals("Цвет, Тип корнеплода, Вес (в граммах)");
+                return header.equals("Тип корнеплода, Цвет, Вес (в граммах)");
             default:
                 return false;
         }
