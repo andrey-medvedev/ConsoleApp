@@ -10,7 +10,7 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
         String color = in.nextLine();
         System.out.println("Введите тип корнеплода:");
         String type = in.nextLine();
-        System.out.println("Введите вес корнеплода:");
+        System.out.println("Введите вес корнеплода (в граммах):");
         int weight = in.nextInt();
         return new RootVegetable(color,  type, weight);
     }
@@ -21,7 +21,7 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
         String type = types[rand.nextInt(types.length)];
         String[] colors = {"Желтый", "Оранжевый", "Красный", "Зеленый", "Розовый", "Коричневый", "Бордовый"};
         String color = colors[rand.nextInt(colors.length)];
-        int weight = 1 + (int)(10 * Math.random());
+        int weight = 1 + (int)(100 * Math.random());
         return new RootVegetable(color, type, weight);
     }
 

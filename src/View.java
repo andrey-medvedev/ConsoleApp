@@ -1,4 +1,5 @@
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
@@ -9,7 +10,7 @@ public class View {
         int userChoice;
         Scanner in = new Scanner(System.in);
 
-        while(true){
+        while (true) {
             System.out.printf("""
                     * Для выбора пользовательского класса введите 1 (текущее значение: %s)
                     * Для задания количества создаваемых объектов введите 2 (текущее значение: %d)
@@ -25,17 +26,17 @@ public class View {
             userChoice = 0;
             userChoice = in.nextInt();
 
-            if (userChoice == 9){
+            if (userChoice == 9) {
                 break;
             }
 
-            switch (userChoice){
+            switch (userChoice) {
                 case 1:
                     System.out.println("Введите новое значение для типа объекта (1 - автомобиль, 2 - книга, 3 - корнеплод)");
                     int internalChoice = in.nextInt();
-                    if (internalChoice == 1){
+                    if (internalChoice == 1) {
                         Controller.setCustomClassType(CustomClassType.AUTOMOBILE);
-                    } else if (internalChoice == 2){
+                    } else if (internalChoice == 2) {
                         Controller.setCustomClassType(CustomClassType.BOOK);
                     } else {
                         Controller.setCustomClassType(CustomClassType.ROOT_VEGETABLE);
@@ -50,21 +51,50 @@ public class View {
                     Controller.readObjectsFromConsole();
                     break;
                 case 4:
-                    //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    System.out.println("Введите путь к файлу для загрузки данных:");
+                    String fileName = in.next();
+                    try {
+                        String finish = "Данные успешно загружены.";
+                        if (Controller.getCustomClassType() == CustomClassType.AUTOMOBILE) {
+                            List<Automobile> automobils = InputCsv.importFromCSV(fileName, Automobile.class);
+                            if (!automobils.isEmpty()) {
+                                Controller.automobils.addAll(automobils);
+                                System.out.println(finish);
+                            }
+
+                        } else if (Controller.getCustomClassType() == CustomClassType.BOOK) {
+                            List<Book> books = InputCsv.importFromCSV(fileName, Book.class);
+                            if (!books.isEmpty()) {
+                                Controller.books.addAll(books);
+                                System.out.println(finish);
+                            }
+
+                        } else if (Controller.getCustomClassType() == CustomClassType.ROOT_VEGETABLE) {
+                            List<RootVegetable> rootVegetables = InputCsv.importFromCSV(fileName, RootVegetable.class);
+                            if (!rootVegetables.isEmpty()) {
+                                Controller.rootVegetables.addAll(rootVegetables);
+                                System.out.println(finish);
+                            }
+                        } else {
+                            System.out.println("Не выбран тип данных для загрузки.");
+                        }
+                    } catch (FileNotFoundException e) {
+                        System.out.println("Ошибка при загрузке файла: " + e.getMessage());
+                    }
                     break;
                 case 5:
                     Controller.readObjectsFromRandom();
                     break;
                 case 6:
                     System.out.println("""
-                        * Для сортировки данных по возрастанию (shellSort) введите 1
-                        * Для сортировки данных по убыванию (shellSort) введите 2
-                        * Для использования альтернативного варианта сортировки введите 3
-                """);
+                                    * Для сортировки данных по возрастанию (shellSort) введите 1
+                                    * Для сортировки данных по убыванию (shellSort) введите 2
+                                    * Для использования альтернативного варианта сортировки введите 3
+                                    * Для экспорта данных в файл введите 4
+                            """);
                     internalChoice = in.nextInt();
                     Controller.sort(internalChoice);
+
                     break;
                 case 7:
                     Controller.search();

@@ -1,6 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
-public class Book extends CustomClass implements Comparable<Book>, Serializable {
+public class Book extends CustomClass implements Comparable<Book>, Serializable, CsvConvertable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String author;
@@ -55,5 +55,21 @@ public class Book extends CustomClass implements Comparable<Book>, Serializable 
     @Override
     public String toString(){
         return String.format("This Book author = '%s', name = '%s', number of pages = %d", this.author, this.name, this.numberOfPages);
+    }
+    public String toCSV() {
+        return author + "," + name + "," + numberOfPages;
+    }
+    @Override
+    public String getCSVHeaders() {
+        return "Автор ,Название книги ,Количество страниц";
+    }
+
+    @Override
+    public void fromCSV(String[] fields) {
+            if (fields.length == 3) {
+                this.author = fields[0];
+                this.name = fields[1];
+                this.numberOfPages = Integer.parseInt(fields[2]);
+            }
     }
 }
