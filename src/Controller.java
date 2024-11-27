@@ -9,9 +9,20 @@ public class Controller {
     private static ArrayList<Automobile> automobils = new ArrayList<>();
     private static String filePath = "C:\\Users\\icefo\\SaveObjects.txt";
 
+    private FillingArray fillingArray;
+
     private Controller(){
     }
 
+    public static void fillArray(FillingArray fillingArray){
+        fillingArray.fillArray(builder);
+    }
+
+    public static String getFilePath() {
+        return filePath;
+    }
+
+/*
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
         for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
@@ -32,6 +43,7 @@ public class Controller {
             Controller.addCustomClassObject((CustomClass) object);
         }
     }
+    */
 
     public static void search(){
         CustomClass searchObject = (CustomClass) (Controller.builder.buildFromConsole(1).getFirst());
@@ -50,13 +62,13 @@ public class Controller {
 
     }
 
-    private static void clearCustomClassLists(){
+    public static void clearCustomClassLists(){
             Controller.automobils.clear();
             Controller.books.clear();
             Controller.rootVegetables.clear();
     }
 
-    private static void addCustomClassObject(CustomClass object){
+    public static void addCustomClassObject(CustomClass object){
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
                 Controller.automobils.add((Automobile) object);

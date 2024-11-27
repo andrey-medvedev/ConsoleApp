@@ -49,13 +49,13 @@ public class View {
                     Controller.setNumberOfObjects(internalChoice);
                     break;
                 case 3:
-                    Controller.readObjectsFromConsole();
+                    Controller.fillArray(new FillArrayInputUser()); //readObjectsFromConsole();
                     break;
                 case 4:
-                    Controller.readObjectsFromFile();
+                    Controller.fillArray(new FillArrayReadFile()); //readObjectsFromFile();
                     break;
                 case 5:
-                    Controller.readObjectsFromRandom();
+                    Controller.fillArray(new FillArrayRandom()); //readObjectsFromRandom();
                     break;
                 case 6:
                     System.out.println("""
