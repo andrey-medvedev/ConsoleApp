@@ -11,15 +11,15 @@ public class CustomClassBuilder <T extends CustomClass & Comparable<T>>{
         this.builder = builder;
     }
 
-    public CustomClass buildFromConsole(){
-        return this.builder.buildFromConsole();
+    public ArrayList<T> buildFromConsole(int number){
+        return this.builder.readValuesFromConsole(number).build();
     }
 
-    public CustomClass buildFromRandom(){
-        return this.builder.buildFromRandom();
+    public ArrayList<T> buildFromRandom(int number){
+        return this.builder.readValuesFromRandom(number).build();
     }
 
     public ArrayList<T> buildFromFile(){
-        return this.builder.buildFromFile();
+        return this.builder.readValuesFromFile().build();
     }
 }

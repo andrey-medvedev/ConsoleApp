@@ -3,7 +3,6 @@ import java.util.ArrayList;
 public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
     private static CustomClassBuilder builder = new CustomClassBuilder(new AutoBuilder());
-
     private static int numberOfObjects = 5;
     private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
@@ -14,20 +13,20 @@ public class Controller {
 
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
-        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
-            Controller.addCustomClassObject(builder.buildFromConsole());
+        for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
+            Controller.addCustomClassObject((CustomClass) object);
         }
     }
 
     public static void readObjectsFromRandom(){
         Controller.clearCustomClassLists();
-        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
-            Controller.addCustomClassObject(builder.buildFromRandom());
+        for(var object : builder.buildFromRandom(Controller.getNumberOfObjects())){
+            Controller.addCustomClassObject((CustomClass) object);
         }
     }
 
     public static void search(){
-        CustomClass searchObject = builder.buildFromConsole();
+        CustomClass searchObject = (CustomClass) (Controller.builder.buildFromConsole(1).getFirst());
 
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
