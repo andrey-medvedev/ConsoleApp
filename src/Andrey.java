@@ -14,6 +14,6 @@ public class Andrey implements User{
     }
     @Override
     public String getFilePath() {
-        return "C:\\Users\\icefo\\SaveObjects.txt";
+        return "C:\\Users\\Zanuda\\Desktop\\SaveObjects.txt";
     }
 }
