@@ -8,34 +8,8 @@ public class View {
 
     public static void main(String[] args) {
 
-        System.out.println("""
-                            Выберите пользователя:
-                            1 - Ростислав
-                            2 - Андрей
-                            3 - Ярослав
-                            4 - Post VID""");
-        int userChoice = 0;
+        int userChoice;
         Scanner in = new Scanner(System.in);
-        userChoice = in.nextInt();
-
-        switch (userChoice){
-            case 1:
-                Controller.setUser(Rostislav.getInstance());
-                break;
-            case 2:
-                Controller.setUser(Andrey.getInstance());
-                break;
-            case 3:
-                Controller.setUser(Yaroslav.getInstance());
-                break;
-            case 4:
-                Controller.setUser(Post_VID.getInstance());
-                break;
-            default:
-                System.out.println("Некорректный ввод!");
-        }
-
-        System.out.printf("Добрый день, %s!\n\n\n1", Controller.getUser().getName());
 
         while(true){
             System.out.printf("""
