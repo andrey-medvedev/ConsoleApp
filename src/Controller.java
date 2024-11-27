@@ -88,29 +88,29 @@ public class Controller {
         switch (mode){
             case 1:
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.shellSort(books, true);
+                    CustomClassOperations.shellSort(books, true, null);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.shellSort(automobils, true);
+                    CustomClassOperations.shellSort(automobils, true, null);
                 } else{
-                    CustomClassOperations.shellSort(rootVegetables, true);
+                    CustomClassOperations.shellSort(rootVegetables, true, null);
                 }
                 break;
             case 2:
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.shellSort(books, false);
+                    CustomClassOperations.shellSort(books, false, null);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.shellSort(automobils, false);
+                    CustomClassOperations.shellSort(automobils, false, null);
                 } else{
-                    CustomClassOperations.shellSort(rootVegetables, false);
+                    CustomClassOperations.shellSort(rootVegetables, false, null);
                 }
                 break;
             case 3:
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.customSort(books, 1);
+                    CustomClassOperations.customSort(books);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.customSort(automobils, 1);
+                    CustomClassOperations.customSort(automobils);
                 } else{
-                    CustomClassOperations.customSort(rootVegetables, 1);
+                    CustomClassOperations.customSort(rootVegetables);
                 }
                 break;
             default:

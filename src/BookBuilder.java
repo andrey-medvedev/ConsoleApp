@@ -15,7 +15,7 @@ public class BookBuilder implements Builder<Book> {
             System.out.println("Введите наименование книги:");
             String name = in.nextLine();
             System.out.println("Введите количество страниц:");
-            int numberOfPages = in.nextInt();
+            int numberOfPages = Integer.parseInt(in.nextLine());
             objects.add(new Book(author, name, numberOfPages));
         }
         return this;
