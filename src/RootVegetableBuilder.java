@@ -10,12 +10,14 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
         objects.clear();
 
         for (int i = 0; i < number; i++) {
-            System.out.println("Цвет корнеплода:");
-            String color = in.nextLine();
             System.out.println("Введите тип корнеплода:");
             String type = in.nextLine();
+
+            System.out.println("Цвет корнеплода:");
+            String color = in.nextLine();
+
             System.out.println("Введите вес корнеплода:");
-            int weight = in.nextInt();
+            int weight = Integer.parseInt(in.nextLine());
             objects.add(new RootVegetable(color, type, weight));
         }
         return this;

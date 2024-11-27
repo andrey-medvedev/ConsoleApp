@@ -14,9 +14,9 @@ public class AutoBuilder implements Builder<Automobile> {
             System.out.println("Введите наименование модели:");
             String model = in.nextLine();
             System.out.println("Введите значение мощности:");
-            int power = in.nextInt();
+            int power = Integer.parseInt(in.nextLine());
             System.out.println("Введите год производства:");
-            int yearOfProduction = in.nextInt();
+            int yearOfProduction = Integer.parseInt(in.nextLine());
             objects.add(new Automobile(power, model, yearOfProduction));
         }
         return this;
