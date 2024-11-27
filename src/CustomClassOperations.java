@@ -4,41 +4,14 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class CustomClassOperations {
+    private static Sort sort = ShellSort.getInstance();
 
     private CustomClassOperations(){
     }
 
-    public static <T extends CustomClass & Comparable<T>> void shellSort (ArrayList<T> array, boolean isNotReverseSort, Comparator<T> comparator){
-        int compareCoefficient = isNotReverseSort ? 1 : -1;
-        if (comparator == null){
-            comparator = T::compareTo;
-        }
-
-        for (int s = array.size() / 2; s > 0; s /= 2) {
-            for (int i = s; i < array.size(); ++i){
-                for (int j = i - s; j >= 0 && compareCoefficient * comparator.compare(array.get(j), array.get(j + s)) > 0; j -= s){
-                    Collections.swap(array, j, j + s);
-                }
-            }
-        }
-    }
-
-    public static <T extends CustomClass & Comparable<T>> void customSort (ArrayList<T> array){
-        ArrayList<T> arrayWithEvenValues = new ArrayList<>(array.stream().filter(x -> x.getIntValueForCustomSort() % 2 == 0).toList());
-        Comparator<T> customComparator = Comparator.comparing(T::getIntValueForCustomSort);
-        shellSort(arrayWithEvenValues, true, customComparator);
-        int j = 0;
-        for(int i = 0; i < array.size(); i++){
-            if (array.get(i).getIntValueForCustomSort() % 2 == 0){
-                array.set(i, arrayWithEvenValues.get(j));
-                j++;
-            }
-        }
-    }
-
     public static <T extends CustomClass & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
         ArrayList<T> copyArray = new ArrayList<>(array);
-        shellSort(copyArray, true, null);
+        ShellSort.getInstance().sort(copyArray, true, null);
         boolean flag = false;
 
         int lower = 0;
@@ -76,6 +49,14 @@ public class CustomClassOperations {
             e.printStackTrace();
         }
         return deserializedArray;
+    }
+
+    public static void setSort(Sort sort){
+        CustomClassOperations.sort = sort;
+    }
+
+    public static Sort getSort(){
+        return sort;
     }
 }
 
