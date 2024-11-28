@@ -17,8 +17,8 @@ public class InputRandomGenerator {
     private static final String[] rootVegetableColors = {"Оранжевый", "Красный", "Желтый", "Белый", "Зеленый"};
 
     // Метод для генерации объектов
-    public List<CustomClass> generateRandomObjects(CustomClassType type, int numberOfObjects) {
-        List<CustomClass> objects = new ArrayList<>();
+    public List<CustomObject> generateRandomObjects(CustomClassType type, int numberOfObjects) {
+        List<CustomObject> objects = new ArrayList<>();
 
         for (int i = 0; i < numberOfObjects; i++) {
             switch (type) {

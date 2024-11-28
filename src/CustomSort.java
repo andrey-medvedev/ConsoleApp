@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Comparator;
 
-public class CustomSort implements Sort{
+public class CustomSort implements Sorter{
     private static final CustomSort instance = new CustomSort();
     private static final ShellSort shellSort = ShellSort.getInstance();
 
@@ -12,8 +12,14 @@ public class CustomSort implements Sort{
         return instance;
     }
 
+
     @Override
-    public <T extends CustomClass & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort, Comparator<T> comparator) {
+    public <T extends CustomObject & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort) {
+        this.sort(array, isNotReverseSort, null);
+        }
+
+    @Override
+    public <T extends CustomObject & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort, Comparator<T> comparator) {
         ArrayList<T> arrayWithEvenValues = new ArrayList<>(array.stream().filter(x -> x.getIntValueForCustomSort() % 2 == 0).toList());
 
         if (comparator == null) {

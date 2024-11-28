@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class CustomClassOperations {
-    private static Sort sort = ShellSort.getInstance();
+
 
     private CustomClassOperations(){
     }
 
-    public static <T extends CustomClass & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
+    public static <T extends CustomObject & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
         ArrayList<T> copyArray = new ArrayList<>(array);
         ShellSort.getInstance().sort(copyArray, true, null);
         boolean flag = false;
@@ -32,7 +32,7 @@ public class CustomClassOperations {
         System.out.println("Элемент " + (!flag ? "не " : "") + "был найден в коллекции!");
     }
 
-    public static <T extends CustomClass & Serializable> void serializeArray (ArrayList<T> array, String path){
+    public static <T extends CustomObject & Serializable> void serializeArray (ArrayList<T> array, String path){
         try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
             out.writeObject(array);
         } catch (IOException e) {
@@ -40,7 +40,7 @@ public class CustomClassOperations {
         }
     }
 
-    public static <T extends CustomClass & Serializable> ArrayList<T> deserializeArray (String path){
+    public static <T extends CustomObject & Serializable> ArrayList<T> deserializeArray (String path){
         ArrayList<T> deserializedArray = new ArrayList<>();
 
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
@@ -49,14 +49,6 @@ public class CustomClassOperations {
             e.printStackTrace();
         }
         return deserializedArray;
-    }
-
-    public static void setSort(Sort sort){
-        CustomClassOperations.sort = sort;
-    }
-
-    public static Sort getSort(){
-        return sort;
     }
 }
 

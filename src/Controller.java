@@ -14,8 +14,8 @@ public class Controller {
 
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
-        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
-            Controller.addCustomClassObject(builder.buildFromConsole());
+        for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
+            Controller.addCustomClassObject((CustomObject) object);
         }
     }
     public static void readObjectsFromFile() {
@@ -28,48 +28,10 @@ public class Controller {
         }
 
         Controller.clearCustomClassLists();
-
-        try {
-            Class<?> clazz;
-            switch (Controller.getCustomClassType()) {
-                case AUTOMOBILE:
-                    clazz = Automobile.class;
-                    break;
-                case BOOK:
-                    clazz = Book.class;
-                    break;
-                case ROOT_VEGETABLE:
-                    clazz = RootVegetable.class;
-                    break;
-                default:
-                    throw new IllegalArgumentException("Неизвестный тип данных: " + Controller.getCustomClassType());
-            }
-
-            List<?> importedObjects = InputCsv.importFromCSV(filePath, clazz);
-
-            if (importedObjects.isEmpty()) {
-                return;
-            }
-
-            for (var object : importedObjects) {
-                Controller.addCustomClassObject((CustomClass) object);
-            }
-            System.out.println("Данные успешно импортированы из файла.");
-        } catch (FileNotFoundException e) {
-            System.out.println("Ошибка: Файл не найден.");
-        } catch (ClassCastException e) {
-            System.out.println("Ошибка преобразования типов: " + e.getMessage());
-        } catch (Exception e) {
-            System.out.println("Неизвестная ошибка: " + e.getMessage());
+        for(var object : builder.buildFromFile(Controller.filePath)){
+            Controller.addCustomClassObject((CustomObject) object);
         }
     }
-
-//    public static void readObjectsFromFile(){
-//        Controller.clearCustomClassLists();
-//        for(var object : builder.buildFromFile(Controller.filePath)){
-//            Controller.addCustomClassObject((CustomClass) object);
-//        }
-//    }
 
     public static void readObjectsFromRandom(){
         Controller.clearCustomClassLists();
@@ -132,33 +94,33 @@ public class Controller {
     public static boolean sort(int mode){
         switch (mode){
             case 1:
-                CustomClassOperations.setSort(ShellSort.getInstance());
+                Controller.sorter = ShellSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, true, null);
+                    sorter.sort(books, true);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, true, null);
+                    sorter.sort(automobils, true);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, true, null);
+                    sorter.sort(rootVegetables, true);
                 }
                 break;
             case 2:
-                CustomClassOperations.setSort(ShellSort.getInstance());
+                Controller.sorter = ShellSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, false, null);
+                    sorter.sort(books, false);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, false, null);
+                    sorter.sort(automobils, false);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, false, null);
+                    sorter.sort(rootVegetables, false);
                 }
                 break;
             case 3:
-                CustomClassOperations.setSort(CustomSort.getInstance());
+                Controller.sorter = CustomSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, false, null);
+                    sorter.sort(books, false);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, false, null);
+                    sorter.sort(automobils, false);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, false, null);
+                    sorter.sort(rootVegetables, false);
                 }
                 break;
             default:
