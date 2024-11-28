@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class CustomClassOperations {
-    private static Sort sort = ShellSort.getInstance();
+
 
     private CustomClassOperations(){
     }
@@ -49,14 +49,6 @@ public class CustomClassOperations {
             e.printStackTrace();
         }
         return deserializedArray;
-    }
-
-    public static void setSort(Sort sort){
-        CustomClassOperations.sort = sort;
-    }
-
-    public static Sort getSort(){
-        return sort;
     }
 }
 

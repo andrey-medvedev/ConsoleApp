@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class ShellSort implements Sort {
+public class ShellSort implements Sorter {
     private static ShellSort instance = new ShellSort();
 
     private ShellSort(){

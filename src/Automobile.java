@@ -54,6 +54,6 @@ public class Automobile implements CustomObject, Comparable<Automobile>, Seriali
 
     @Override
     public String toString(){
-        return String.format("This Automobile power = %d, model = '%s',  year of production = %d",this.power, this.model,  this.yearOfProduction);
+        return String.format("This Automobile model = '%s', power = %d, year of production = %d", this.model, this.power, this.yearOfProduction);
     }
 }

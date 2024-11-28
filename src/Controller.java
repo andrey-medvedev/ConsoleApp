@@ -8,6 +8,7 @@ public class Controller {
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Automobile> automobils = new ArrayList<>();
     private static String filePath = "C:\\Users\\icefo\\SaveObjects.txt";
+    private static Sorter sorter = ShellSort.getInstance();
 
     private Controller(){
     }
@@ -87,33 +88,33 @@ public class Controller {
     public static boolean sort(int mode){
         switch (mode){
             case 1:
-                CustomClassOperations.setSort(ShellSort.getInstance());
+                Controller.sorter = ShellSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, true);
+                    sorter.sort(books, true);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, true);
+                    sorter.sort(automobils, true);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, true);
+                    sorter.sort(rootVegetables, true);
                 }
                 break;
             case 2:
-                CustomClassOperations.setSort(ShellSort.getInstance());
+                Controller.sorter = ShellSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, false);
+                    sorter.sort(books, false);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, false);
+                    sorter.sort(automobils, false);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, false);
+                    sorter.sort(rootVegetables, false);
                 }
                 break;
             case 3:
-                CustomClassOperations.setSort(CustomSort.getInstance());
+                Controller.sorter = CustomSort.getInstance();
                 if (Controller.customClassType == CustomClassType.BOOK) {
-                    CustomClassOperations.getSort().sort(books, false);
+                    sorter.sort(books, false);
                 } else if(Controller.customClassType == CustomClassType.AUTOMOBILE){
-                    CustomClassOperations.getSort().sort(automobils, false);
+                    sorter.sort(automobils, false);
                 } else{
-                    CustomClassOperations.getSort().sort(rootVegetables, false);
+                    sorter.sort(rootVegetables, false);
                 }
                 break;
             default:
