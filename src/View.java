@@ -1,11 +1,12 @@
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class View {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         int userChoice;
         Scanner in = new Scanner(System.in);
@@ -76,10 +77,9 @@ public class View {
                 case 9:
                     Controller.saveDataToFile();
                     break;
-
                 case 10:
                     ExportHandler.handleExport();
-
+                    break;
                 default:
                     System.out.println("Некорректный ввод!");
             }

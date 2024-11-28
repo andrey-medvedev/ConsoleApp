@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
@@ -8,6 +9,7 @@ public class Controller {
     static ArrayList<Book> books = new ArrayList<>();
     static ArrayList<Automobile> automobils = new ArrayList<>();
     private static String filePath;
+    private static Sorter sorter;
 
     private Controller(){
     }
@@ -18,16 +20,21 @@ public class Controller {
             Controller.addCustomClassObject((CustomObject) object);
         }
     }
-    public static void readObjectsFromFile() {
+
+    public static void readObjectsFromFile() throws InterruptedException {
         System.out.println("Введите путь к файлу: ");
         Scanner scanner = new Scanner(System.in);
         filePath = scanner.next();
         if (filePath == null || filePath.isBlank()) {
             System.out.println("Путь к файлу не задан.");
             return;
+        } else {
+
         }
 
+
         Controller.clearCustomClassLists();
+        System.out.println("Файл успешно загружен!");
         for(var object : builder.buildFromFile(Controller.filePath)){
             Controller.addCustomClassObject((CustomObject) object);
         }
@@ -36,12 +43,12 @@ public class Controller {
     public static void readObjectsFromRandom(){
         Controller.clearCustomClassLists();
         for(var object : builder.buildFromRandom(Controller.getNumberOfObjects())){
-            Controller.addCustomClassObject((CustomClass) object);
+            Controller.addCustomClassObject((CustomObject) object);
         }
     }
 
     public static void search(){
-        CustomClass searchObject = (CustomClass) (Controller.builder.buildFromConsole(1).getFirst());
+        CustomObject searchObject = (CustomObject) (Controller.builder.buildFromConsole(1).getFirst());
 
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
@@ -54,7 +61,6 @@ public class Controller {
                 CustomClassOperations.binarySearch(rootVegetables, (RootVegetable) searchObject);
             }
         }
-
     }
 
     private static void clearCustomClassLists(){
@@ -63,7 +69,7 @@ public class Controller {
             Controller.rootVegetables.clear();
     }
 
-    private static void addCustomClassObject(CustomClass object){
+    private static void addCustomClassObject(CustomObject object){
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
                 Controller.automobils.add((Automobile) object);
@@ -123,6 +129,7 @@ public class Controller {
                     sorter.sort(rootVegetables, false);
                 }
                 break;
+
             default:
                 System.out.println("В метод передано некорректное значение!");
                 return false;

@@ -16,7 +16,7 @@ public class ExportHandler {
                 exportChoice = in.nextInt();
 
                 if (exportChoice == 1) {
-                    System.out.println("Введите имя файла:");
+                    System.out.println("Введите имя файла (без ковычек):");
                     String fileName = in.next();
                     fileName = fileName + ".csv";
 

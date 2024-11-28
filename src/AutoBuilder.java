@@ -37,23 +37,30 @@ public class AutoBuilder implements Builder<Automobile> {
         return this;
     }
 
-    public AutoBuilder readValuesFromFile(String path){
+    public AutoBuilder readValuesFromFile(String path) {
         objects.clear();
 
-        for (var auto : CustomClassOperations.deserializeArray(path)) {
-            objects.add((Automobile) auto);
-        }
+        try {
 
-        if (objects.size() != Controller.getNumberOfObjects()){
-            System.out.println("""
-        Количество объектов в файле отлично от установленного в программе.
-        Значение в настройках программы было обновлено!""");
-            Controller.setNumberOfObjects(objects.size());
+            var importedObjects = InputCsv.importFromCSV(path, Automobile.class);
+
+            for (var auto : importedObjects) {
+                objects.add((Automobile) auto);
+            }
+
+            if (objects.size() != Controller.getNumberOfObjects() ) {
+                System.out.println("""
+            Количество объектов в файле отлично от установленного в программе.
+            Значение в настройках программы было обновлено!
+            """);
+                Controller.setNumberOfObjects(objects.size());
+            }
+        } catch (Exception e) {
+            System.out.println("Ошибка чтения данных из файла: " + e.getMessage());
         }
 
         return this;
     }
-
     public ArrayList<Automobile> build(){
         return objects;
     }

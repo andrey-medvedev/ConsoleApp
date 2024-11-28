@@ -1,105 +1,87 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.ArrayList;
 
 public class InputCsv {
 
-    public static <T> List<T> importFromCSV(String fileName, Class<T> clazz) throws FileNotFoundException {
+    public static <T> List<T> importFromCSV(String fileName, Class<T> clazz) {
         List<T> objects = new ArrayList<>();
 
         try (Scanner scanner = new Scanner(new File(fileName))) {
 
             if (!scanner.hasNextLine()) {
-                System.out.println("Ошибка: Файл пустой");
+                System.out.println("Ошибка: Файл пустой.");
                 return objects;
             }
 
-            String header = scanner.nextLine();
-
-            // Проверяем на совпадение
+            String header = scanner.nextLine().trim();
             if (!isValidHeader(header, clazz)) {
-                System.out.println("Ошибка: Заголовок не соответствует ожидаемому формату.");
+                System.out.println("Ошибка: Заголовок файла не соответствует ожидаемому формату для " + clazz.getSimpleName());
                 return objects;
             }
+
 
 
             while (scanner.hasNextLine()) {
-                String line = scanner.nextLine();
+                String line = scanner.nextLine().trim();
                 String[] fields = line.split(",");
                 boolean valid = true;
 
-                if (clazz == Automobile.class) {
-                    if (fields.length == 3) {
-                        try {
-
-                            int power = Integer.parseInt(fields[0]);
-                            String model = fields[1];
-                            int yearOfProduction = Integer.parseInt(fields[2]);
-                            Automobile automobile = new Automobile(power, model, yearOfProduction);
-                            objects.add((T) automobile);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Ошибка в данных для типа АВТОМОБИЛИ: " + e.getMessage());
-                            valid = false;
-                        }
+                try {
+                    if (clazz == Automobile.class && fields.length == 3) {
+                        int power = Integer.parseInt(fields[0].trim());
+                        String model = fields[1].trim();
+                        int yearOfProduction = Integer.parseInt(fields[2].trim());
+                        Automobile automobile = new Automobile(power, model, yearOfProduction);
+                        objects.add((T) automobile);
+                    } else if (clazz == Book.class && fields.length == 3) {
+                        String title = fields[0].trim();
+                        String author = fields[1].trim();
+                        int pages = Integer.parseInt(fields[2].trim());
+                        Book book = new Book(title, author, pages);
+                        objects.add((T) book);
+                    } else if (clazz == RootVegetable.class && fields.length == 3) {
+                        String name = fields[0].trim();
+                        String color = fields[1].trim();
+                        int weight = Integer.parseInt(fields[2].trim());
+                        RootVegetable rootVegetable = new RootVegetable(name, color, weight);
+                        objects.add((T) rootVegetable);
                     } else {
                         valid = false;
                     }
-                } else if (clazz == Book.class) {
-                    if (fields.length == 3) {
-                        try {
-                            String title = fields[0];
-                            String author = fields[1];
-                            int pages = Integer.parseInt(fields[2]);
-                            Book book = new Book(title, author, pages);
-                            objects.add((T) book);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Ошибка в данных для типа КНИГИ: " + e.getMessage());
-                            valid = false;
-                        }
-                    } else {
-                        valid = false;
-                    }
-                } else if (clazz == RootVegetable.class) {
-                    if (fields.length == 3) {
-                        try {
-
-                            String name = fields[0];
-                            String color = fields[1];
-                            int weight = Integer.parseInt(fields[2]);
-                            RootVegetable rootVegetable = new RootVegetable(name, color, weight);
-                            objects.add((T) rootVegetable);
-                        } catch (NumberFormatException e) {
-                            System.out.println("Ошибка в данных для типа КОРНЕПЛОДЫ: " + e.getMessage());
-                            valid = false;
-                        }
-                    } else {
-                        valid = false;
-                    }
+                } catch (NumberFormatException e) {
+                    System.out.println("Ошибка: Некорректный формат числового значения в строке: " + line);
+                    valid = false;
                 }
 
                 if (!valid) {
-                    System.out.println("Ошибка! Присутсвует пропуск строк.");
+                    System.out.println("Ошибка: Строка пропущена из-за несоответствия формату: " + line);
                 }
             }
 
         } catch (FileNotFoundException e) {
-            System.out.println("Файл не найден: " + fileName + "");
+            System.out.println("Ошибка: Файл '" + fileName + "' не найден" );
+        } catch (Exception e) {
+            System.out.println("Ошибка: Произошла непредвиденная ошибка при чтении файла. " + e.getMessage());
         }
 
         return objects;
     }
 
-    // Проверяем заголовки для валидации файлов
+
     private static boolean isValidHeader(String header, Class<?> clazz) {
+
+        String cleanedHeader = header.replaceAll("\\s+", "");
+
         switch (clazz.getSimpleName()) {
             case "Automobile":
-                return header.equals("Мощность, Модель, Год выпуска");
+                return cleanedHeader.equalsIgnoreCase("Мощность,Модель,Годвыпуска");
             case "Book":
-                return header.equals("Автор, Название книги, Количество страниц");
+                return cleanedHeader.equalsIgnoreCase("Автор,Названиекниги,Количествостраниц");
             case "RootVegetable":
-                return header.equals("Тип корнеплода, Цвет, Вес (в граммах)");
+                return cleanedHeader.equalsIgnoreCase("Типкорнеплода,Цвет,Вес(вграммах)");
             default:
                 return false;
         }

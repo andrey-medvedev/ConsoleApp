@@ -38,18 +38,26 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
         return this;
     }
 
-    public RootVegetableBuilder readValuesFromFile(String path){
+    public RootVegetableBuilder readValuesFromFile(String path) {
         objects.clear();
 
-        for (var rootVegetable : CustomClassOperations.deserializeArray(path)) {
-            objects.add((RootVegetable) rootVegetable);
-        }
+        try {
+            var importedBooks = InputCsv.importFromCSV(path, RootVegetable.class);
 
-        if (objects.size() != Controller.getNumberOfObjects()){
-            System.out.println("""
-        Количество объектов в файле отлично от установленного в программе.
-        Значение в настройках программы было обновлено!""");
-            Controller.setNumberOfObjects(objects.size());
+            for (var rootVegetable : importedBooks) {
+                objects.add((RootVegetable) rootVegetable);
+            }
+
+            if (objects.size() != Controller.getNumberOfObjects()) {
+                System.out.println("""
+                Количество объектов в файле отлично от установленного в программе.
+                Значение в настройках программы было обновлено!
+                """);
+                Controller.setNumberOfObjects(objects.size());
+            }
+
+        } catch (Exception e) {
+            System.out.println("Ошибка чтения данных из файла: " + e.getMessage());
         }
 
         return this;

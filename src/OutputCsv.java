@@ -10,7 +10,7 @@ public class OutputCsv {
 
 
             if (!objects.isEmpty()) {
-                String headers = objects.get(0).getCSVHeaders(); // Получение заголовков
+                String headers = objects.get(0).getCSVHeaders();
                 writer.append(headers).append("\n");
             }
 
