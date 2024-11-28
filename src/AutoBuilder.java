@@ -10,13 +10,14 @@ public class AutoBuilder implements Builder<Automobile> {
         objects.clear();
 
         for (int i = 0; i < number; i++) {
-            Scanner in = new Scanner(System.in);
             System.out.println("Введите наименование модели:");
-            String model = validateCarModel(in.nextLine());
+
+            String model = UserInputValidator.stringInputWithValidation();
             System.out.println("Введите значение мощности:");
-            int power = validateCarPower(Integer.parseInt(in.nextLine()));
+            int power = UserInputValidator.intInputWithValidation();
             System.out.println("Введите год производства:");
-            int yearOfProduction = validateCarYearOfProduction(Integer.parseInt(in.nextLine()));
+            int yearOfProduction = UserInputValidator.intInputWithValidation();
+
             objects.add(new Automobile(power, model, yearOfProduction));
         }
         return this;

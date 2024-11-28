@@ -9,13 +9,14 @@ public class BookBuilder implements Builder<Book> {
         objects.clear();
 
         for (int i = 0; i < number; i++) {
-            Scanner in = new Scanner(System.in);
             System.out.println("Введите имя автора:");
-            String author = validateBookAuthor(in.nextLine());
+
+            String author = UserInputValidator.stringInputWithValidation();
             System.out.println("Введите наименование книги:");
-            String name = validateBookName(in.nextLine());
+            String name = UserInputValidator.stringInputWithValidation();
             System.out.println("Введите количество страниц:");
-            int numberOfPages = validateBookNumberOfPages(Integer.parseInt(in.nextLine()));
+            int numberOfPages = UserInputValidator.intInputWithValidation();
+
             objects.add(new Book(author, name, numberOfPages));
         }
         return this;
