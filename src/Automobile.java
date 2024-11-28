@@ -1,6 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
-public class Automobile extends CustomClass implements Comparable<Automobile>, Serializable {
+public class Automobile implements CustomObject, Comparable<Automobile>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private int power;

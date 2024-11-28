@@ -9,8 +9,8 @@ public class InputUserGenerator {
         this.scanner = scanner;
     }
 
-    public List<CustomClass> readObjects(CustomClassType type, int numberOfObjects) {
-        List<CustomClass> objects = new ArrayList<>();
+    public List<CustomObject> readObjects(CustomClassType type, int numberOfObjects) {
+        List<CustomObject> objects = new ArrayList<>();
 
         for (int i = 0; i < numberOfObjects; i++) {
             System.out.printf("Введите данные для объекта %d/%d типа %s: \n", i + 1, numberOfObjects, type);

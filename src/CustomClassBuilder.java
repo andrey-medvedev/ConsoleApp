@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class CustomClassBuilder <T extends CustomClass & Comparable<T>>{
+public class CustomClassBuilder <T extends CustomObject & Comparable<T>>{
     private Builder<T> builder;
 
     public CustomClassBuilder(Builder<T> builder){
