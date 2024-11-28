@@ -6,18 +6,17 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
     private final ArrayList<RootVegetable> objects = new ArrayList<>();
 
     public RootVegetableBuilder readValuesFromConsole(int number) {
-        Scanner in = new Scanner(System.in);
         objects.clear();
 
         for (int i = 0; i < number; i++) {
             System.out.println("Введите тип корнеплода:");
-            String type = in.nextLine();
+            String type = UserInputValidator.stringInputWithValidation();
 
             System.out.println("Цвет корнеплода:");
-            String color = in.nextLine();
+            String color = UserInputValidator.stringInputWithValidation();
 
             System.out.println("Введите вес корнеплода:");
-            int weight = Integer.parseInt(in.nextLine());
+            int weight = UserInputValidator.intInputWithValidation();
             objects.add(new RootVegetable(color, type, weight));
         }
         return this;

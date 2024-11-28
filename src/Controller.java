@@ -8,7 +8,7 @@ public class Controller {
     private static ArrayList<Book> books = new ArrayList<>();
     private static ArrayList<Automobile> automobils = new ArrayList<>();
     private static String filePath = "C:\\Users\\icefo\\SaveObjects.txt";
-    private static Sorter sorter = ShellSort.getInstance();
+    private static Sorter sorter;
 
     private Controller(){
     }
@@ -48,7 +48,6 @@ public class Controller {
                 CustomClassOperations.binarySearch(rootVegetables, (RootVegetable) searchObject);
             }
         }
-
     }
 
     private static void clearCustomClassLists(){
