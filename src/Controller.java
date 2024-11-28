@@ -1,7 +1,4 @@
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
 
 public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
@@ -17,8 +14,8 @@ public class Controller {
 
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
-        for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
-            Controller.addCustomClassObject((CustomClass) object);
+        for(var i = 0; i < Controller.getNumberOfObjects(); i++){
+            Controller.addCustomClassObject(builder.buildFromConsole());
         }
     }
     public static void readObjectsFromFile() {
