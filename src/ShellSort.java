@@ -12,7 +12,12 @@ public class ShellSort implements Sort {
         return instance;
     }
 
-    public <T extends CustomClass & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort, Comparator<T> comparator) {
+    @Override
+    public <T extends CustomObject & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort) {
+        this.sort(array, isNotReverseSort, null);
+    }
+    @Override
+    public <T extends CustomObject & Comparable<T>> void sort(ArrayList<T> array, boolean isNotReverseSort, Comparator<T> comparator) {
         int compareCoefficient = isNotReverseSort ? 1 : -1;
 
         if (comparator == null) {
