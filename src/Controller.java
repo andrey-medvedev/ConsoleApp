@@ -28,8 +28,6 @@ public class Controller {
         if (filePath == null || filePath.isBlank()) {
             System.out.println("Путь к файлу не задан.");
             return;
-        } else {
-
         }
 
 
