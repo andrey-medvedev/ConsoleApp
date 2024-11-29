@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
+
 public class BookBuilder implements Builder<Book> {
 
     private final ArrayList<Book> objects = new ArrayList<>();
