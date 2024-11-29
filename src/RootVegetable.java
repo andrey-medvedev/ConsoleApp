@@ -1,7 +1,7 @@
 import java.io.Serial;
 import java.io.Serializable;
 
-public class RootVegetable extends CustomClass implements Comparable<RootVegetable>, Serializable {
+public class RootVegetable implements CustomObject, Comparable<RootVegetable>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String color;

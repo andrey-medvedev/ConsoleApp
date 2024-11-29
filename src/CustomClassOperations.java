@@ -1,41 +1,17 @@
-import org.w3c.dom.ls.LSOutput;
-
-import java.sql.SQLOutput;
+import java.io.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class CustomClassOperations {
+
 
     private CustomClassOperations(){
     }
 
-    public static <T extends CustomClass & Comparable<T>> void shellSort (ArrayList<T> array, boolean isNotReverseSort){
-        int compareCoefficient = isNotReverseSort ? 1 : -1;
-        for (int s = array.size() / 2; s > 0; s /= 2) {
-            for (int i = s; i < array.size(); ++i){
-                for (int j = i - s; j >= 0 && compareCoefficient * (array.get(j).compareTo(array.get(j + s))) > 0; j -= s){
-                    Collections.swap(array, j, j + s);
-                }
-            }
-        }
-    }
-
-    public static <T extends CustomClass & Comparable<T>> void customSort (ArrayList<T> array, int fieldNumber){
-        ArrayList<T> arrayWithEvenValues = new ArrayList<>(array.stream().filter(x -> x.getIntValueForCustomSort() % 2 == 0).toList());
-        shellSort(arrayWithEvenValues, true);
-        int j = 0;
-        for(int i = 0; i < array.size(); i++){
-            if (array.get(i).getIntValueForCustomSort() % 2 == 0){
-                array.set(i, arrayWithEvenValues.get(j));
-                j++;
-            }
-        }
-    }
-
-    public static <T extends CustomClass & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
+    public static <T extends CustomObject & Comparable<T>> void binarySearch (ArrayList<T> array, T object){
         ArrayList<T> copyArray = new ArrayList<>(array);
-        shellSort(copyArray, true);
+        ShellSort.getInstance().sort(copyArray, true, null);
         boolean flag = false;
 
         int lower = 0;
@@ -53,7 +29,26 @@ public class CustomClassOperations {
                 break;
             }
         }
-        System.out.println("Элемент был " + (!flag ? "не " : "") + "найден в коллекции!");
+        System.out.println("Элемент " + (!flag ? "не " : "") + "был найден в коллекции!");
+    }
+
+    public static <T extends CustomObject & Serializable> void serializeArray (ArrayList<T> array, String path){
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(path))) {
+            out.writeObject(array);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static <T extends CustomObject & Serializable> ArrayList<T> deserializeArray (String path){
+        ArrayList<T> deserializedArray = new ArrayList<>();
+
+        try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(path))) {
+            deserializedArray = (ArrayList<T>) in.readObject();
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return deserializedArray;
     }
 }
 

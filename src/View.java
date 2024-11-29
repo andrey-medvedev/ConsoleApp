@@ -1,9 +1,11 @@
 import java.io.File;
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 import java.util.ArrayList;
 
 public class View {
+
     public static void main(String[] args) {
 
         int userChoice;
@@ -11,28 +13,28 @@ public class View {
 
         while(true){
             System.out.printf("""
-                    * Для выбора пользовательского класса введите 1 (текущее значение: %s)
-                    * Для задания количества создаваемых объектов введите 2 (текущее значение: %d)
-                    * Для ввода объектов с консоли введите 3;
-                    * Для ввода объектов из файла введите 4;
-                    * Для ввода объектов случайной генерацией введите 5;
-                    * Для сортировки объектов (с возможностью экспорта результатов) введите 6;
-                    * Для поиска объекта в данных (с возможностью экспорта результатов) введите 7;
-                    * Для просмотра текущих данных введите 8
-                    * Для выхода из программы введите 9
+                    * Введите 1 для выбора пользовательского класса (текущее значение: %s)
+                    * Введите 2 для задания количества создаваемых объектов (текущее значение: %d)
+                    * Введите 3 для ввода объектов с консоли;
+                    * Введите 4 для ввода объектов из файла;
+                    * Введите 5 для ввода объектов случайной генерацией;
+                    * Введите 6 для сортировки объектов;
+                    * Введите 7 для поиска объекта в данных;
+                    * Введите 8 для просмотра текущих данных
+                    * Введите 9 для сохранения текущих данных в файл
+                    * Введите 10 для выхода из программы
                     """, Controller.getCustomClassType().toString(), Controller.getNumberOfObjects());
 
-            userChoice = 0;
-            userChoice = in.nextInt();
+            userChoice = UserInputValidator.intInput(0);
 
-            if (userChoice == 9){
+            if (userChoice == 10){
                 break;
             }
 
             switch (userChoice){
                 case 1:
                     System.out.println("Введите новое значение для типа объекта (1 - автомобиль, 2 - книга, 3 - корнеплод)");
-                    int internalChoice = in.nextInt();
+                    int internalChoice = UserInputValidator.intInput(0);
                     if (internalChoice == 1){
                         Controller.setCustomClassType(CustomClassType.AUTOMOBILE);
                     } else if (internalChoice == 2){
@@ -50,9 +52,7 @@ public class View {
                     Controller.readObjectsFromConsole();
                     break;
                 case 4:
-                    //должен считывать объекты из файла, тип которых зависит от customClassType (автомобили, корнеплоды, книги)
-                    //При вводе объектов необходима валидация
-                    //размер массива определяется NumberOfObjects
+                    Controller.readObjectsFromFile();
                     break;
                 case 5:
                     Controller.readObjectsFromRandom();
@@ -63,7 +63,7 @@ public class View {
                         * Для сортировки данных по убыванию (shellSort) введите 2
                         * Для использования альтернативного варианта сортировки введите 3
                 """);
-                    internalChoice = in.nextInt();
+                    internalChoice = UserInputValidator.intInput(0);
                     Controller.sort(internalChoice);
                     break;
                 case 7:
@@ -72,6 +72,9 @@ public class View {
                 case 8:
                     System.out.println("Текущие данные имеют следующий вид: ");
                     Controller.printData();
+                    break;
+                case 9:
+                    Controller.saveDataToFile();
                     break;
                 default:
                     System.out.println("Некорректный ввод!");

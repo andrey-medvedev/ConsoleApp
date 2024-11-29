@@ -1,6 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
-public class Automobile extends CustomClass implements Comparable<Automobile>, Serializable {
+public class Automobile implements CustomObject, Comparable<Automobile>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private int power;
@@ -54,6 +54,6 @@ public class Automobile extends CustomClass implements Comparable<Automobile>, S
 
     @Override
     public String toString(){
-        return String.format("This Automobile power = %d, model = '%s',  year of production = %d",this.power, this.model,  this.yearOfProduction);
+        return String.format("This Automobile model = '%s', power = %d, year of production = %d", this.model, this.power, this.yearOfProduction);
     }
 }

@@ -1,6 +1,6 @@
 import java.io.Serial;
 import java.io.Serializable;
-public class Book extends CustomClass implements Comparable<Book>, Serializable {
+public class Book implements CustomObject, Comparable<Book>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private String author;
