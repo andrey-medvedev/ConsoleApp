@@ -2,7 +2,7 @@ import java.util.ArrayList;
 
 public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
-    private static CustomClassBuilder builder = new CustomClassBuilder(new AutoBuilder());
+    private static CustomObjectEngineer customObjectEngineer = new CustomObjectEngineer(new AutoBuilder());
     private static int numberOfObjects = 5;
     private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
     private static ArrayList<Book> books = new ArrayList<>();
@@ -15,27 +15,26 @@ public class Controller {
 
     public static void readObjectsFromConsole(){
         Controller.clearCustomClassLists();
-        for(var object : builder.buildFromConsole(Controller.getNumberOfObjects())){
+        for(var object : customObjectEngineer.buildFromConsole(Controller.getNumberOfObjects())){
             Controller.addCustomClassObject((CustomObject) object);
         }
     }
 
     public static void readObjectsFromFile(){
-        Controller.clearCustomClassLists();
-        for(var object : builder.buildFromFile(Controller.filePath)){
+        for(var object : customObjectEngineer.buildFromFile(Controller.filePath)){
             Controller.addCustomClassObject((CustomObject) object);
         }
     }
 
     public static void readObjectsFromRandom(){
         Controller.clearCustomClassLists();
-        for(var object : builder.buildFromRandom(Controller.getNumberOfObjects())){
+        for(var object : customObjectEngineer.buildFromRandom(Controller.getNumberOfObjects())){
             Controller.addCustomClassObject((CustomObject) object);
         }
     }
 
     public static void search(){
-        CustomObject searchObject = (CustomObject) (Controller.builder.buildFromConsole(1).getFirst());
+        CustomObject searchObject = (CustomObject) (Controller.customObjectEngineer.buildFromConsole(1).getFirst());
 
         switch (customClassType){
             case CustomClassType.AUTOMOBILE -> {
@@ -50,7 +49,7 @@ public class Controller {
         }
     }
 
-    private static void clearCustomClassLists(){
+    public static void clearCustomClassLists(){
             Controller.automobils.clear();
             Controller.books.clear();
             Controller.rootVegetables.clear();
@@ -140,6 +139,18 @@ public class Controller {
         System.out.println("\n\n\n");
     }
 
+    public static ArrayList<Automobile> getAutomobils(){
+        return automobils;
+    }
+
+    public static ArrayList<Book> getBooks(){
+        return books;
+    }
+
+    public static ArrayList<RootVegetable> getRootVegetables(){
+        return rootVegetables;
+    }
+
     public static int getNumberOfObjects(){
         return Controller.numberOfObjects;
     }
@@ -163,13 +174,13 @@ public class Controller {
         Controller.customClassType = type;
         switch (type){
             case CustomClassType.AUTOMOBILE -> {
-                Controller.builder.setBuilder(new AutoBuilder());
+                Controller.customObjectEngineer.setBuilder(new AutoBuilder());
             }
             case CustomClassType.BOOK -> {
-                Controller.builder.setBuilder(new BookBuilder());
+                Controller.customObjectEngineer.setBuilder(new BookBuilder());
             }
             case CustomClassType.ROOT_VEGETABLE -> {
-                Controller.builder.setBuilder(new RootVegetableBuilder());
+                Controller.customObjectEngineer.setBuilder(new RootVegetableBuilder());
             }
         }
     }
