@@ -1,9 +1,9 @@
 import java.util.ArrayList;
 
-public class CustomObjectEngineer <T extends CustomObject & Comparable<T>>{
+public class CustomClassBuilder <T extends CustomObject & Comparable<T>>{
     private Builder<T> builder;
 
-    public CustomObjectEngineer(Builder<T> builder){
+    public CustomClassBuilder(Builder<T> builder){
         this.builder = builder;
     }
 

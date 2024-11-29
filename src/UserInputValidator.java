@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class UserInputValidator {
 
-  public static int intInput(){
+  public static int intInputWithValidation(){
       Scanner in = new Scanner(System.in);
       while(true){
             try {
@@ -18,7 +18,7 @@ public class UserInputValidator {
         }
     }
 
-    public static String stringInput(){
+    public static String stringInputWithValidation(){
         Scanner in = new Scanner(System.in);
         String stringValue = "";
         while (stringValue.isEmpty()){

@@ -9,13 +9,15 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
 
         for (int i = 0; i < number; i++) {
             System.out.println("Введите тип корнеплода:");
-            String type = UserInputValidator.stringInput();
+
+            String type = UserInputValidator.stringInputWithValidation();
 
             System.out.println("Цвет корнеплода:");
-            String color = UserInputValidator.stringInput();
+            String color = UserInputValidator.stringInputWithValidation();
 
             System.out.println("Введите вес корнеплода:");
-            int weight = UserInputValidator.intInput();
+            int weight = UserInputValidator.intInputWithValidation();
+
             objects.add(new RootVegetable(color, type, weight));
         }
         return this;
@@ -39,25 +41,22 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
     public RootVegetableBuilder readValuesFromFile(String path){
         objects.clear();
 
-        try {
-            for (var rootVegetable : CustomClassOperations.deserializeArray(path)) {
-                objects.add((RootVegetable) rootVegetable);
-            }
-            if (objects.size() != Controller.getNumberOfObjects()) {
-                System.out.println("""
-                        Количество объектов в файле отлично от установленного в программе.
-                        Значение в настройках программы было обновлено!""");
-                Controller.setNumberOfObjects(objects.size());
-            }
-        } catch(ClassCastException e) {
-            System.out.println("Сохраненные в файле объекты не являются корнеплодами");
-            objects.addAll(Controller.getRootVegetables());
-            Controller.clearCustomClassLists();
+        for (var rootVegetable : CustomClassOperations.deserializeArray(path)) {
+            objects.add((RootVegetable) rootVegetable);
         }
+
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
+        }
+
         return this;
     }
 
     public ArrayList<RootVegetable> build(){
         return objects;
     }
+
 }
