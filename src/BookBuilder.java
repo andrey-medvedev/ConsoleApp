@@ -14,7 +14,7 @@ public class BookBuilder implements Builder<Book> {
             System.out.println("Введите наименование книги:");
             String name = UserInputValidator.stringInput();
             System.out.println("Введите количество страниц:");
-            int numberOfPages = UserInputValidator.intInput();
+            int numberOfPages = UserInputValidator.intInput(0);
             objects.add(new Book(author, name, numberOfPages));
         }
         return this;

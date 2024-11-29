@@ -25,7 +25,7 @@ public class View {
                     * Введите 10 для выхода из программы
                     """, Controller.getCustomClassType().toString(), Controller.getNumberOfObjects());
 
-            userChoice = in.nextInt();
+            userChoice = UserInputValidator.intInput(0);
 
             if (userChoice == 10){
                 break;
@@ -34,7 +34,7 @@ public class View {
             switch (userChoice){
                 case 1:
                     System.out.println("Введите новое значение для типа объекта (1 - автомобиль, 2 - книга, 3 - корнеплод)");
-                    int internalChoice = in.nextInt();
+                    int internalChoice = UserInputValidator.intInput(0);
                     if (internalChoice == 1){
                         Controller.setCustomClassType(CustomClassType.AUTOMOBILE);
                     } else if (internalChoice == 2){
@@ -63,7 +63,7 @@ public class View {
                         * Для сортировки данных по убыванию (shellSort) введите 2
                         * Для использования альтернативного варианта сортировки введите 3
                 """);
-                    internalChoice = in.nextInt();
+                    internalChoice = UserInputValidator.intInput(0);
                     Controller.sort(internalChoice);
                     break;
                 case 7:
