@@ -11,11 +11,11 @@ public class AutoBuilder implements Builder<Automobile> {
 
         for (int i = 0; i < number; i++) {
             System.out.println("Введите наименование модели:");
-            String model = UserInputValidator.stringInputWithValidation();
+            String model = UserInputValidator.stringInput();
             System.out.println("Введите значение мощности:");
-            int power = UserInputValidator.intInputWithValidation();
+            int power = UserInputValidator.intInput();
             System.out.println("Введите год производства:");
-            int yearOfProduction = UserInputValidator.intInputWithValidation();
+            int yearOfProduction = UserInputValidator.intInput();
             objects.add(new Automobile(power, model, yearOfProduction));
         }
         return this;
@@ -36,19 +36,25 @@ public class AutoBuilder implements Builder<Automobile> {
     }
 
     public AutoBuilder readValuesFromFile(String path){
+
         objects.clear();
-
-        for (var auto : CustomClassOperations.deserializeArray(path)) {
-            objects.add((Automobile) auto);
+        try {
+            for (var auto : CustomClassOperations.deserializeArray(path)) {
+                objects.add((Automobile) auto);
+            }
+            if (objects.size() != Controller.getNumberOfObjects()) {
+                System.out.println("""
+                        Количество объектов в файле отлично от установленного в программе.
+                        Значение в настройках программы было обновлено!""");
+                Controller.setNumberOfObjects(objects.size());
+            }
+        } catch(ClassCastException e) {
+            System.out.println("Сохраненные в файле объекты не являются автомобилями");
+            if (!(Controller.getAutomobils().isEmpty())){
+                objects.addAll(Controller.getAutomobils());
+                Controller.clearCustomClassLists();
+            }
         }
-
-        if (objects.size() != Controller.getNumberOfObjects()){
-            System.out.println("""
-        Количество объектов в файле отлично от установленного в программе.
-        Значение в настройках программы было обновлено!""");
-            Controller.setNumberOfObjects(objects.size());
-        }
-
         return this;
     }
 
