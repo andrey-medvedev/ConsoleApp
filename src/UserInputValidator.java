@@ -2,15 +2,16 @@ import java.util.Scanner;
 
 public class UserInputValidator {
 
-  public static int intInput(){
+  public static int intInput(int min){
       Scanner in = new Scanner(System.in);
+
       while(true){
             try {
                 int intValue =  Integer.parseInt(in.nextLine());
-                if (intValue > 0){
+                if (intValue > min){
                     return intValue;
                 } else{
-                    System.out.println("Введенное значение должно быть > 0");
+                    System.out.printf("Введенное значение должно быть больше %d", min);
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Введеное значение нельзя привести к целому числу");

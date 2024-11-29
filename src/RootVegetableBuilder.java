@@ -16,7 +16,7 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
             String color = UserInputValidator.stringInput();
 
             System.out.println("Введите вес корнеплода:");
-            int weight = UserInputValidator.intInput();
+            int weight = UserInputValidator.intInput(0);
             objects.add(new RootVegetable(color, type, weight));
         }
         return this;
@@ -50,7 +50,7 @@ public class RootVegetableBuilder implements Builder<RootVegetable> {
                         Значение в настройках программы было обновлено!""");
                 Controller.setNumberOfObjects(objects.size());
             }
-        } catch(ClassCastException e) {
+        } catch (ClassCastException e) {
             System.out.println("Сохраненные в файле объекты не являются корнеплодами");
             objects.addAll(Controller.getRootVegetables());
             Controller.clearCustomClassLists();

@@ -1,10 +1,9 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class AutoBuilder implements Builder<Automobile> {
 
-    private final ArrayList<Automobile> objects = new ArrayList<Automobile>();
+    private final ArrayList<Automobile> objects = new ArrayList<>();
 
     public AutoBuilder readValuesFromConsole(int number) {
         objects.clear();
@@ -13,9 +12,9 @@ public class AutoBuilder implements Builder<Automobile> {
             System.out.println("Введите наименование модели:");
             String model = UserInputValidator.stringInput();
             System.out.println("Введите значение мощности:");
-            int power = UserInputValidator.intInput();
+            int power = UserInputValidator.intInput(0);
             System.out.println("Введите год производства:");
-            int yearOfProduction = UserInputValidator.intInput();
+            int yearOfProduction = UserInputValidator.intInput(1900);
             objects.add(new Automobile(power, model, yearOfProduction));
         }
         return this;
@@ -27,7 +26,7 @@ public class AutoBuilder implements Builder<Automobile> {
 
         for (int i = 0; i < number; i++) {
             int power = 250 + (int) (100 * Math.random());
-            String[] models = {"opel", "BMW", "Mercedes", "Mitsubishi", "Audi"};
+            String[] models = {"Opel", "BMW", "Mercedes", "Mitsubishi", "Audi"};
             String model = models[rand.nextInt(models.length)];
             int yearOfProduction = 1990 + (int) (30 * Math.random());
             objects.add(new Automobile(power, model, yearOfProduction));
