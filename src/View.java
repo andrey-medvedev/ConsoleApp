@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 public class View {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
 
         int userChoice;
         Scanner in = new Scanner(System.in);
@@ -22,12 +22,13 @@ public class View {
                     * Введите 7 для поиска объекта в данных;
                     * Введите 8 для просмотра текущих данных
                     * Введите 9 для сохранения текущих данных в файл
-                    * Введите 10 для выхода из программы
+                    * Введите 10 для экспорта в файл
+                    * Введите 11 для выхода из программы
                     """, Controller.getCustomClassType().toString(), Controller.getNumberOfObjects());
 
             userChoice = in.nextInt();
 
-            if (userChoice == 10){
+            if (userChoice == 11){
                 break;
             }
 
@@ -75,6 +76,9 @@ public class View {
                     break;
                 case 9:
                     Controller.saveDataToFile();
+                    break;
+                case 10:
+                    ExportHandler.handleExport();
                     break;
                 default:
                     System.out.println("Некорректный ввод!");
