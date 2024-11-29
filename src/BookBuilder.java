@@ -42,31 +42,22 @@ public class BookBuilder implements Builder<Book> {
         return this;
     }
 
-    public BookBuilder readValuesFromFile(String path) {
+    public BookBuilder readValuesFromFile(String path){
         objects.clear();
 
-        try {
-            var importedBooks = InputCsv.importFromCSV(path, Book.class);
+        for (var book : CustomClassOperations.deserializeArray(path)) {
+            objects.add((Book) book);
+        }
 
-            for (var book : importedBooks) {
-                objects.add((Book) book);
-            }
-
-            if (objects.size() != Controller.getNumberOfObjects()) {
-                System.out.println("""
-                Количество объектов в файле отлично от установленного в программе.
-                Значение в настройках программы было обновлено!
-                """);
-                Controller.setNumberOfObjects(objects.size());
-            }
-
-        } catch (Exception e) {
-            System.out.println("Ошибка чтения данных из файла: " + e.getMessage());
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
         }
 
         return this;
     }
-
 
     public ArrayList<Book> build(){
         return objects;

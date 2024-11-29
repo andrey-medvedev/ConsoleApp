@@ -1,14 +1,13 @@
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Controller {
     private static CustomClassType customClassType = CustomClassType.AUTOMOBILE;
     private static CustomClassBuilder builder = new CustomClassBuilder(new AutoBuilder());
     private static int numberOfObjects = 5;
-    static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
-    static ArrayList<Book> books = new ArrayList<>();
-    static ArrayList<Automobile> automobils = new ArrayList<>();
-    private static String filePath;
+    private static ArrayList<RootVegetable> rootVegetables = new ArrayList<>();
+    private static ArrayList<Book> books = new ArrayList<>();
+    private static ArrayList<Automobile> automobils = new ArrayList<>();
+    private static String filePath = "C:\\Users\\icefo\\SaveObjects.txt";
     private static Sorter sorter;
 
     private Controller(){
@@ -21,18 +20,8 @@ public class Controller {
         }
     }
 
-    public static void readObjectsFromFile() throws InterruptedException {
-        System.out.println("Введите путь к файлу: ");
-        Scanner scanner = new Scanner(System.in);
-        filePath = scanner.next();
-        if (filePath == null || filePath.isBlank()) {
-            System.out.println("Путь к файлу не задан.");
-            return;
-        }
-
-
+    public static void readObjectsFromFile(){
         Controller.clearCustomClassLists();
-        System.out.println("Файл успешно загружен!");
         for(var object : builder.buildFromFile(Controller.filePath)){
             Controller.addCustomClassObject((CustomObject) object);
         }
@@ -127,7 +116,6 @@ public class Controller {
                     sorter.sort(rootVegetables, false);
                 }
                 break;
-
             default:
                 System.out.println("В метод передано некорректное значение!");
                 return false;
