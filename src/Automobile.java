@@ -1,14 +1,13 @@
 import java.io.Serial;
 import java.io.Serializable;
-
-public class Automobile implements CustomObject, Comparable<Automobile>, Serializable, CsvConvertable {
+public class Automobile implements CustomObject, Comparable<Automobile>, Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
     private int power;
     private String model;
     private int yearOfProduction;
 
-    public Automobile(int power, String model, int yearOfProduction) {
+    public Automobile(int power, String model, int yearOfProduction){
         this.power = power;
         this.model = model;
         this.yearOfProduction = yearOfProduction;
@@ -17,41 +16,36 @@ public class Automobile implements CustomObject, Comparable<Automobile>, Seriali
     public int getPower() {
         return this.power;
     }
-
-    public String getModel() {
+    public String getModel(){
         return this.model;
     }
-
-    public int getYearOfProduction() {
+    public int getYearOfProduction(){
         return this.yearOfProduction;
     }
-
     public int getIntValueForCustomSort() {
         return this.power;
     }
 
-    public void setPower(int power) {
+    public void setPower(int power){
         this.power = power;
     }
-
-    public void setModel(String model) {
+    public void setModel(String model){
         this.model = model;
     }
-
     public void setYearOfProduction(int yearOfProduction) {
         this.yearOfProduction = yearOfProduction;
     }
 
     @Override
-    public int compareTo(Automobile o) {
+    public int compareTo(Automobile o){
 
         int compareResult = this.model.compareTo(o.getModel());
-        if (compareResult != 0) {
+        if (compareResult != 0){
             return compareResult;
         }
 
         compareResult = Integer.compare(this.power, o.getPower());
-        if (compareResult != 0) {
+        if (compareResult != 0){
             return compareResult;
         }
 
@@ -59,24 +53,7 @@ public class Automobile implements CustomObject, Comparable<Automobile>, Seriali
     }
 
     @Override
-    public String toString() {
-        return String.format("Мощность = %d, Модель автомобиля = '%s', Год производства = %d",this.power, this.model,  this.yearOfProduction);
-    }
-
-    public String toCSV() {
-        return power + "," + model + "," + yearOfProduction;
-    }
-
-    public String getCSVHeaders() {
-        return "Мощность, Модель, Год выпуска";
-    }
-
-    @Override
-    public void fromCSV(String[] fields) {
-        if (fields.length == 3) {
-            this.power = Integer.parseInt(fields[0]);
-            this.model = fields[1];
-            this.yearOfProduction = Integer.parseInt(fields[2]);
-        }
+    public String toString(){
+        return String.format("This Automobile model = '%s', power = %d, year of production = %d", this.model, this.power, this.yearOfProduction);
     }
 }
