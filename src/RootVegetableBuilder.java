@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Random;
-import java.util.Scanner;
 
 public class RootVegetableBuilder implements Builder<RootVegetable> {
     private final ArrayList<RootVegetable> objects = new ArrayList<>();
