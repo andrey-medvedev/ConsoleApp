@@ -59,7 +59,7 @@ public class RootVegetable implements CustomObject, Comparable<RootVegetable>, S
 
     @Override
     public String toString() {
-        return String.format("This RootVegetable type = '%s', color = '%s', weight = %d", this.type, this.color, this.weight);
+        return String.format("Тип корнеплода = '%s', цвет = '%s', вес (в граммах) = %d", this.type, this.color, this.weight);
     }
 
     @Override

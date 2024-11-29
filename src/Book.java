@@ -54,7 +54,8 @@ public class Book implements CustomObject, Comparable<Book>, Serializable, CsvCo
 
     @Override
     public String toString(){
-        return String.format("This Book author = '%s', name = '%s', number of pages = %d", this.author, this.name, this.numberOfPages);
+        return String.format("Автор = '%s', Название книги = '%s', Количество страниц = %d",
+                this.author, this.name, this.numberOfPages);
     }
 
     public String toCSV() {
