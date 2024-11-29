@@ -10,11 +10,13 @@ public class BookBuilder implements Builder<Book> {
 
         for (int i = 0; i < number; i++) {
             System.out.println("Введите имя автора:");
-            String author = UserInputValidator.stringInput();
+
+            String author = UserInputValidator.stringInputWithValidation();
             System.out.println("Введите наименование книги:");
-            String name = UserInputValidator.stringInput();
+            String name = UserInputValidator.stringInputWithValidation();
             System.out.println("Введите количество страниц:");
-            int numberOfPages = UserInputValidator.intInput();
+            int numberOfPages = UserInputValidator.intInputWithValidation();
+
             objects.add(new Book(author, name, numberOfPages));
         }
         return this;
@@ -43,28 +45,22 @@ public class BookBuilder implements Builder<Book> {
     public BookBuilder readValuesFromFile(String path){
         objects.clear();
 
-        try {
-            for (var book : CustomClassOperations.deserializeArray(path)) {
-                objects.add((Book) book);
-            }
-
-            if (objects.size() != Controller.getNumberOfObjects()) {
-                System.out.println("""
-                        Количество объектов в файле отлично от установленного в программе.
-                        Значение в настройках программы было обновлено!""");
-                Controller.setNumberOfObjects(objects.size());
-            }
-        } catch(ClassCastException e) {
-            System.out.println("Сохраненные в файле объекты не являются книгами");
-            if (!(Controller.getBooks().isEmpty())){
-                objects.addAll(Controller.getBooks());
-                Controller.clearCustomClassLists();
-            }
+        for (var book : CustomClassOperations.deserializeArray(path)) {
+            objects.add((Book) book);
         }
+
+        if (objects.size() != Controller.getNumberOfObjects()){
+            System.out.println("""
+        Количество объектов в файле отлично от установленного в программе.
+        Значение в настройках программы было обновлено!""");
+            Controller.setNumberOfObjects(objects.size());
+        }
+
         return this;
     }
 
     public ArrayList<Book> build(){
         return objects;
     }
+
 }
